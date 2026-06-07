@@ -1,0 +1,151 @@
+# --------------------------------------
+# Butterfly Theme Override Config
+# --------------------------------------
+
+# Navigation
+nav:
+  display_title: true
+  fixed: true
+
+menu:
+  首页: / || fas fa-home
+  归档: /archives/ || fas fa-archive
+  分类: /categories/ || fas fa-folder-open
+  标签: /tags/ || fas fa-tags
+  关于: /about/ || fas fa-heart
+  友人帐: /links/ || fas fa-link
+  留言板: /comment/ || fas fa-comment
+
+# Social
+social:
+  fab fa-github: https://github.com/honjun || Github || '#24292e'
+
+# Avatar
+avatar:
+  img: /img/favicon.ico
+  effect: true
+
+# Footer
+footer:
+  owner:
+    enable: true
+    since: 2018
+  copyright: false
+
+# Dark Mode
+darkmode:
+  enable: true
+  button: true
+  autoChangeMode: 1
+
+# Index Page
+index_layout: 4
+index_post_content:
+  method: 2
+  length: 300
+
+# Subtitle
+subtitle:
+  enable: true
+  effect: true
+  source: false
+  sub:
+    - 好少年光芒万丈
+    - Live your life with passion!
+
+# Post Settings
+toc:
+  post: true
+  page: true
+  number: true
+  expand: true
+  scroll_percent: true
+
+post_copyright:
+  enable: true
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+# Aside
+aside:
+  enable: true
+  position: right
+  card_author:
+    enable: true
+    description: 好少年光芒万丈
+    button:
+      enable: true
+      icon: fab fa-github
+      text: Follow Me
+      link: https://github.com/honjun
+  card_announcement:
+    enable: true
+    content: 欢迎来到 hojun 的博客
+  card_recent_post:
+    enable: true
+    limit: 5
+  card_categories:
+    enable: true
+    limit: 8
+  card_tags:
+    enable: true
+    limit: 40
+    orderby: random
+  card_archives:
+    enable: true
+    type: monthly
+    format: MMMM YYYY
+    order: -1
+    limit: 8
+  card_webinfo:
+    enable: true
+    post_count: true
+    last_push_date: true
+
+# Search
+search:
+  use: local_search
+  placeholder: 搜索
+
+local_search:
+  preload: true
+  top_n_per_article: 1
+
+# Busuanzi
+busuanzi:
+  site_uv: true
+  site_pv: true
+  page_pv: true
+
+# Cover
+cover:
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+
+# Article meta
+post_meta:
+  page:
+    date_type: created
+    categories: true
+    tags: false
+    label: true
+  post:
+    position: left
+    date_type: both
+    categories: true
+    tags: true
+    label: true
+
+# Background
+background:
+
+# Error images
+error_img:
+  flink: /img/friend_404.gif
+  post_page: /img/404.jpg
+
+error_404:
+  enable: true
+  subtitle: 'Page Not Found'
+  background: /img/error-page.png
