@@ -1,0 +1,75 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<%
+var title = page.title || '';
+if (is_home()) {
+  title = config.title;
+} else if (is_archive()) {
+  title = __('archive.title');
+} else if (is_category()) {
+  title = __('category.title') + ': ' + page.category;
+} else if (is_tag()) {
+  title = __('tag.title') + ': ' + page.tag;
+}
+title = title ? title + ' | ' + config.title : config.title;
+%>
+<title><%= title %></title>
+
+<meta name="description" content="<%= page.description || config.description %>">
+<meta name="keywords" content="<%= page.keywords || config.keywords %>">
+<meta name="author" content="<%= config.author %>">
+
+<link rel="icon" href="<%- url_for(theme.nav.logo || '/img/favicon.ico') %>">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Styles -->
+<link rel="stylesheet" href="<%- url_for('/css/main.css') %>">
+
+<!-- KaTeX for math rendering -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+<% if (theme.pwa && theme.pwa.enable) { %>
+<link rel="manifest" href="<%- url_for('/manifest.json') %>">
+<meta name="theme-color" content="#161a23">
+<% } %>
+
+<!-- Open Graph -->
+<meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>">
+<meta property="og:title" content="<%= page.title || config.title %>">
+<meta property="og:description" content="<%= page.description || config.description %>">
+<meta property="og:url" content="<%= page.permalink || config.url %>">
+<meta property="og:site_name" content="<%= config.title %>">
+<% if (page.cover) { %>
+<meta property="og:image" content="<%= page.cover %>">
+<% } %>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<%= page.title || config.title %>">
+<meta name="twitter:description" content="<%= page.description || config.description %>">
+
+<% if (config.feed && config.feed.path) { %>
+<link rel="alternate" href="<%- url_for(config.feed.path) %>" type="application/atom+xml" title="<%= config.title %>">
+<% } %>
+
+<!-- Anti-FOUC: set data-theme before first paint -->
+<script>
+(function() {
+  var theme = localStorage.getItem('stardust-theme');
+  if (!theme || theme === 'auto') {
+    var hour = new Date().getHours();
+    var darkStart = <%= theme.dark_mode.dark_start || 19 %>;
+    var darkEnd = <%= theme.dark_mode.dark_end || 7 %>;
+    theme = (hour >= darkStart || hour < darkEnd) ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>

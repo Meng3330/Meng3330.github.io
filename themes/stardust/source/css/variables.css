@@ -1,0 +1,116 @@
+/* ============================================
+   星尘图书馆 Stardust Library — Design Tokens
+   ============================================ */
+
+:root {
+  /* Light mode (default) */
+  --bg: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --accent: #1e40af;
+  --accent-hover: #1e3a8a;
+  --text: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --gold: #d97706;
+  --green: #059669;
+  --purple: #8b5cf6;
+  --red: #ef4444;
+
+  --card-bg: #ffffff;
+  --card-bg-hover: #f8fafc;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --card-shadow-hover: 0 10px 25px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.06);
+  --border-color: #e2e8f0;
+  --border-light: #f1f5f9;
+
+  --frost-bg: rgba(255,255,255,0.72);
+  --frost-blur: 20px;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Lora', Georgia, 'Times New Roman', serif;
+  --font-code: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
+
+  --fs-hero: 3.5rem;
+  --fs-h1: 1.875rem;
+  --fs-h2: 1.5rem;
+  --fs-h3: 1.25rem;
+  --fs-h4: 1.125rem;
+  --fs-body: 1rem;
+  --fs-sm: 0.875rem;
+  --fs-xs: 0.75rem;
+
+  --lh-heading: 1.3;
+  --lh-body: 1.6;
+  --ls-body: 0.02em;
+
+  --anim-fast: 150ms;
+  --anim-medium: 300ms;
+  --anim-slow: 500ms;
+  --anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --anim-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --max-width: min(90%, 1280px);
+  --content-width: min(85%, 1000px);
+  --nav-height: 64px;
+  --sidebar-width: 300px;
+  --toc-width: 220px;
+
+  --z-header: 100;
+  --z-sidebar: 200;
+  --z-overlay: 150;
+  --z-float: 90;
+  --z-loading: 999;
+}
+
+[data-theme="dark"] {
+  --bg: #161a23;
+  --bg-secondary: #1a1f2e;
+  --accent: #2563eb;
+  --accent-hover: #3b82f6;
+  --text: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --gold: #fbbf24;
+  --green: #10b981;
+  --purple: #8b5cf6;
+  --red: #ef4444;
+
+  --card-bg: #1e2330;
+  --card-bg-hover: #252b3a;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --card-shadow-hover: 0 10px 30px rgba(0,0,0,0.4), 0 4px 10px rgba(0,0,0,0.3);
+  --border-color: #2d3548;
+  --border-light: #252b3a;
+
+  --frost-bg: rgba(22,26,35,0.8);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161a23;
+    --bg-secondary: #1a1f2e;
+    --accent: #2563eb;
+    --accent-hover: #3b82f6;
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --gold: #fbbf24;
+    --green: #10b981;
+    --purple: #8b5cf6;
+    --red: #ef4444;
+
+    --card-bg: #1e2330;
+    --card-bg-hover: #252b3a;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+    --card-shadow-hover: 0 10px 30px rgba(0,0,0,0.4), 0 4px 10px rgba(0,0,0,0.3);
+    --border-color: #2d3548;
+    --border-light: #252b3a;
+    --frost-bg: rgba(22,26,35,0.8);
+  }
+}

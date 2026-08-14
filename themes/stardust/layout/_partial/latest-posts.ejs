@@ -1,0 +1,10 @@
+<% if (page.posts && page.posts.length) { %>
+<section class="latest-posts">
+  <h2 class="section-title">&#x1F552; <%= __('home.latest') %></h2>
+  <div class="posts-masonry">
+    <% page.posts.each(function(post) { %>
+    <%- partial('_partial/post-card', { post: post, layout: 'grid' }) %>
+    <% }) %>
+  </div>
+</section>
+<% } %>

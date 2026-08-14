@@ -1,0 +1,150 @@
+# --------------------------------------
+# Stardust Theme Configuration
+# 星尘图书馆 - A breathing digital private library
+# --------------------------------------
+
+# Loading Screen
+loading:
+  enable: true
+  particle_count: 60
+  duration: 3000
+  quotes:
+    - "我们都是孤独的行路人，唯有书籍能照亮前路"
+    - "每一本书都是一个打开的世界"
+    - "思想的深度，决定了人生的高度"
+    - "在阅读中，我们遇见更好的自己"
+    - "书籍是横渡时间大海的航船"
+
+# Starfield Background
+starfield:
+  enable: true
+  particle_count: 120
+  speed: 0.3
+  max_line_dist: 100
+  meteor_interval: 8000
+
+# Navigation
+nav:
+  logo: /img/avatar.svg
+  display_title: true
+  menu:
+    首页: { path: /, icon: fas fa-home }
+    文章: { path: /archives/, icon: fas fa-archive }
+    分类: { path: /categories/, icon: fas fa-folder-open }
+    标签: { path: /tags/, icon: fas fa-tags }
+    关于: { path: /about/, icon: fas fa-heart }
+    留言板: { path: /comment/, icon: fas fa-comment }
+
+# Sidebar
+sidebar:
+  enable: true
+  position: left
+  author:
+    enable: true
+    avatar: /img/avatar.svg
+  categories:
+    enable: true
+    limit: 8
+  tags:
+    enable: true
+    limit: 20
+    orderby: random
+  recent_posts:
+    enable: true
+    limit: 5
+  archives:
+    enable: true
+    limit: 8
+
+# Floating Action Buttons
+float_actions:
+  scroll_top: true
+  toc: true
+  share: true
+  comment: true
+
+# Home Page
+home:
+  hero_title: "Meng"
+  hero_subtitle: "控制工程学习笔记"
+  featured_count: 3
+  latest_count: 10
+  category_cards: 6
+  friend_links: true
+
+# Post Settings
+post:
+  toc:
+    enable: true
+    number: true
+    depth: 4
+    scroll_percent: true
+  copyright:
+    enable: true
+    license: CC BY-NC-SA 4.0
+    license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+  related_posts:
+    enable: true
+    limit: 3
+  meta:
+    date: true
+    updated: true
+    categories: true
+    tags: true
+    wordcount: true
+    readtime: true
+
+# Dark Mode
+dark_mode:
+  enable: true
+  auto: true
+  dark_start: 19
+  dark_end: 7
+
+# Social Links
+social:
+  github: { icon: fab fa-github, url: https://github.com/Meng3330, color: '#24292e' }
+  email: { icon: fas fa-envelope, url: mailto:i@example.com, color: '#4a7dbe' }
+
+# Footer
+footer:
+  since: 2025
+  copyright: true
+  runtime: true
+
+# Comments (placeholder for Giscus/Waline/etc.)
+comments:
+  enable: false
+  system: giscus
+
+# Easter Eggs
+easter_eggs:
+  konami: true
+  meteor_count: 30
+
+# PWA
+pwa:
+  enable: false
+
+# Colors (override design tokens)
+colors:
+  dark:
+    bg: "#161a23"
+    accent: "#2563eb"
+    text: "#e2e8f0"
+    text_secondary: "#94a3b8"
+    gold: "#fbbf24"
+    green: "#10b981"
+    purple: "#8b5cf6"
+    red: "#ef4444"
+    card_bg: "#1e2330"
+  light:
+    bg: "#f8fafc"
+    accent: "#1e40af"
+    text: "#1e293b"
+    text_secondary: "#475569"
+    gold: "#d97706"
+    green: "#059669"
+    purple: "#8b5cf6"
+    red: "#ef4444"
+    card_bg: "#ffffff"

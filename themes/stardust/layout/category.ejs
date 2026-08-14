@@ -1,0 +1,25 @@
+<div class="category-page">
+  <h1 class="page-title"><%= __('category.title') %></h1>
+
+  <div class="category-grid">
+    <% site.categories.each(function(cat) { %>
+    <a href="<%- url_for(cat.path) %>" class="category-card<%= (page.category === cat.name) ? ' active' : '' %>">
+      <div class="category-card-inner">
+        <span class="category-icon"><%= cat.name.charAt(0) %></span>
+        <h3 class="category-name"><%= cat.name %></h3>
+        <span class="category-count"><%= cat.posts.length %> <%= __('category.count_unit') %></span>
+      </div>
+    </a>
+    <% }) %>
+  </div>
+
+  <% if (page.category) { %>
+  <h2 class="category-current-title"><%= page.category %></h2>
+  <div class="category-posts">
+    <% page.posts.each(function(post) { %>
+    <%- partial('_partial/post-card', { post: post, layout: 'list' }) %>
+    <% }) %>
+  </div>
+  <%- partial('_partial/pagination') %>
+  <% } %>
+</div>

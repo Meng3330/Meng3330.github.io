@@ -1,0 +1,14 @@
+<% if (theme.home.friend_links && site.data && site.data.links && site.data.links.length) { %>
+<section class="friend-links">
+  <h2 class="section-title">&#x1F517; <%= __('home.friend_links') %></h2>
+  <div class="friend-links-grid">
+    <% site.data.links.forEach(function(link) { %>
+    <a href="<%= link.url %>" class="friend-card" target="_blank" rel="noopener">
+      <img src="<%= link.avatar %>" alt="<%= link.name %>" width="56" height="56" loading="lazy">
+      <span class="friend-name"><%= link.name %></span>
+      <span class="friend-desc"><%= link.description || '' %></span>
+    </a>
+    <% }) %>
+  </div>
+</section>
+<% } %>

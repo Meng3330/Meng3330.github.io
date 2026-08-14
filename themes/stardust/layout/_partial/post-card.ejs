@@ -1,0 +1,32 @@
+<% /* Accepts: post, layout (featured|grid|list) */ %>
+<% var layout = typeof layout !== 'undefined' ? layout : 'list'; %>
+<article class="post-card post-card--<%= layout %>">
+  <% if (post.cover || (post.photos && post.photos.length)) { %>
+  <div class="post-card-cover">
+    <a href="<%- url_for(post.path) %>" tabindex="-1" aria-hidden="true">
+      <img src="<%= post.cover || post.photos[0] %>" alt="<%= post.title %>" loading="lazy">
+    </a>
+    <% if (post.categories && post.categories.length) { %>
+    <a href="<%- url_for(post.categories.first().path) %>" class="post-category"><%= post.categories.first().name %></a>
+    <% } %>
+  </div>
+  <% } %>
+  <div class="post-card-body">
+    <div class="post-meta">
+      <time datetime="<%= date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, config.date_format || 'YYYY-MM-DD') %></time>
+      <% if (post.categories && post.categories.length && !post.cover) { %>
+      <a href="<%- url_for(post.categories.first().path) %>" class="meta-category"><%= post.categories.first().name %></a>
+      <% } %>
+    </div>
+    <h2 class="post-card-title">
+      <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+    </h2>
+    <% if (layout !== 'featured') { %>
+    <p class="post-card-excerpt"><%= post.description || strip_html(post.content).substring(0, 150).trim() + '...' %></p>
+    <% } %>
+    <div class="post-card-footer">
+      <span><%= wordcount(post.content) %> 字</span>
+      <span><%= Math.max(1, Math.ceil(wordcount(post.content) / 300)) %> 分钟</span>
+    </div>
+  </div>
+</article>

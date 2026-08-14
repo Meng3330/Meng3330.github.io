@@ -1,0 +1,88 @@
+/* ============================================
+   Responsive & Print
+   ============================================ */
+
+/* Large desktop: > 1440px */
+@media (min-width: 1441px) {
+  :root {
+    --content-width: min(70%, 1100px);
+  }
+}
+
+/* Extra large: > 1920px */
+@media (min-width: 1921px) {
+  :root {
+    --content-width: min(60%, 1200px);
+    --toc-width: 260px;
+  }
+}
+
+/* Tablet: 768px - 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --max-width: 960px;
+    --sidebar-width: 260px;
+    --toc-width: 200px;
+  }
+}
+
+/* Mobile: < 768px */
+@media (max-width: 768px) {
+  :root {
+    --max-width: 100%;
+    --content-width: 100%;
+    --sidebar-width: 280px;
+    --toc-width: 0;
+    --nav-height: 56px;
+    --fs-hero: 2.5rem;
+    --fs-h1: 1.5rem;
+    --fs-h2: 1.25rem;
+    --fs-h3: 1.125rem;
+  }
+
+  .post-body-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .post-toc-sidebar {
+    display: none;
+  }
+
+  .page-body-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .page-toc-sidebar {
+    display: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .site-header,
+  .site-sidebar,
+  .site-footer,
+  .float-actions,
+  #starfield-canvas,
+  .post-toc-sidebar,
+  .post-actions,
+  .post-comments,
+  .related-posts {
+    display: none !important;
+  }
+
+  .post-content,
+  .page-body {
+    max-width: 100%;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+}

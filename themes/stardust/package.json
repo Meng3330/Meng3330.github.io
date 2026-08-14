@@ -1,0 +1,8 @@
+{
+  "name": "hexo-theme-stardust",
+  "version": "1.0.0",
+  "description": "星尘图书馆 - A breathing digital private library theme for Hexo",
+  "author": "Fomalhaut",
+  "license": "MIT",
+  "keywords": ["hexo", "theme", "stardust", "starfield", "dark-mode"]
+}

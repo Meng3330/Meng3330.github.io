@@ -1,0 +1,101 @@
+<article class="post-page">
+  <!-- Cover image -->
+  <% if (page.cover || (page.photos && page.photos.length)) { %>
+  <div class="post-cover" aria-hidden="true">
+    <img src="<%= page.cover || page.photos[0] %>" alt="<%= page.title %>" class="cover-image">
+    <div class="cover-overlay"></div>
+  </div>
+  <% } %>
+
+  <div class="post-container">
+    <!-- Post header -->
+    <header class="post-header">
+      <h1 class="post-title"><%= page.title %></h1>
+      <div class="post-meta">
+        <% if (theme.post.meta.date) { %>
+        <time datetime="<%= date(page.date, 'YYYY-MM-DD') %>">
+          <i class="icon-calendar"></i> <%= date(page.date, config.date_format || 'YYYY-MM-DD') %>
+        </time>
+        <% } %>
+        <% if (theme.post.meta.updated && page.updated && page.updated.toISOString() !== page.date.toISOString()) { %>
+        <span class="meta-updated">
+          <i class="icon-clock"></i> <%= date(page.updated, config.date_format || 'YYYY-MM-DD') %>
+        </span>
+        <% } %>
+        <% if (theme.post.meta.wordcount || theme.post.meta.readtime) { %>
+        <span class="meta-stats">
+          <% if (theme.post.meta.wordcount) { %>
+          <i class="icon-file-text"></i> <%= wordcount(page.content) %> <%= __('post.wordcount') %>
+          <% } %>
+          <% if (theme.post.meta.readtime) { %>
+          <i class="icon-eye"></i> ~<%= Math.max(1, Math.ceil(wordcount(page.content) / 300)) %> <%= __('post.readtime_unit') %>
+          <% } %>
+        </span>
+        <% } %>
+        <% if (theme.post.meta.categories && page.categories && page.categories.length) { %>
+        <a href="<%- url_for(page.categories.first().path) %>" class="meta-category">
+          <i class="icon-folder"></i> <%= page.categories.first().name %>
+        </a>
+        <% } %>
+      </div>
+
+      <% if (theme.post.meta.tags && page.tags && page.tags.length) { %>
+      <div class="post-tags">
+        <% page.tags.each(function(tag) { %>
+        <a href="<%- url_for(tag.path) %>" class="tag-badge"># <%= tag.name %></a>
+        <% }) %>
+      </div>
+      <% } %>
+    </header>
+
+    <!-- Content with TOC sidebar -->
+    <div class="post-body-wrapper">
+      <div class="post-content">
+        <%- page.content %>
+      </div>
+
+      <% if (theme.post.toc.enable && page.toc && page.toc.length > 1) { %>
+      <aside class="post-toc-sidebar">
+        <nav class="toc-widget">
+          <h4 class="toc-title"><%= __('post.toc') %></h4>
+          <%- toc(page.content, { list_number: theme.post.toc.number, max_depth: theme.post.toc.depth || 4 }) %>
+        </nav>
+      </aside>
+      <% } %>
+    </div>
+
+    <!-- Copyright -->
+    <%- partial('_partial/copyright') %>
+
+    <!-- Tags at bottom -->
+    <% if (page.tags && page.tags.length) { %>
+    <div class="post-bottom-tags">
+      <% page.tags.each(function(tag) { %>
+      <a href="<%- url_for(tag.path) %>" class="tag-badge tag-badge--large"># <%= tag.name %></a>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <!-- Interaction buttons -->
+    <div class="post-actions">
+      <button class="post-action-btn" id="btn-like" aria-label="Like">
+        <i class="icon-star"></i>
+      </button>
+      <button class="post-action-btn" id="btn-collect" aria-label="Collect">
+        <i class="icon-bookmark"></i>
+      </button>
+      <button class="post-action-btn" id="btn-share-post" aria-label="Share">
+        <i class="icon-share"></i>
+      </button>
+    </div>
+
+    <!-- Previous / Next -->
+    <%- partial('_partial/prev-next') %>
+
+    <!-- Related posts -->
+    <%- partial('_partial/related-posts') %>
+
+    <!-- Comments -->
+    <%- partial('_partial/comments') %>
+  </div>
+</article>

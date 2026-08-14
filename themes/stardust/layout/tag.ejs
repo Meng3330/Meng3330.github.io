@@ -1,0 +1,17 @@
+<div class="tag-page">
+  <h1 class="page-title"><%= __('tag.title') %></h1>
+
+  <div class="tag-cloud">
+    <%- tagcloud({ min_font: 14, max_font: 32, unit: 'px', amount: 40, orderby: 'length', start_color: '#2563eb', end_color: '#8b5cf6' }) %>
+  </div>
+
+  <% if (page.tag) { %>
+  <h2 class="tag-current-title"># <%= page.tag %></h2>
+  <div class="tag-posts">
+    <% page.posts.each(function(post) { %>
+    <%- partial('_partial/post-card', { post: post, layout: 'list' }) %>
+    <% }) %>
+  </div>
+  <%- partial('_partial/pagination') %>
+  <% } %>
+</div>

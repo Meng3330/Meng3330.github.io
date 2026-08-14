@@ -1,0 +1,12 @@
+<section class="about-snippet">
+  <h2 class="section-title">&#x1F464; <%= __('home.about_me') %></h2>
+  <div class="about-card">
+    <img src="<%- url_for(theme.sidebar.author.avatar || theme.nav.logo || '/img/favicon.ico') %>"
+         alt="<%= config.author %>" width="96" height="96">
+    <div>
+      <h3><%= config.author %></h3>
+      <p><%= config.description %></p>
+      <a href="<%- url_for('/about/') %>" class="btn btn-primary"><%= __('home.view_all') %></a>
+    </div>
+  </div>
+</section>

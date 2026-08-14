@@ -1,0 +1,36 @@
+<% if (theme.post.related_posts && theme.post.related_posts.enable && is_post()) {
+  /* Simple tag-overlap related posts */
+  var related = [];
+  if (page.tags && page.tags.length) {
+    site.posts.each(function(p) {
+      if (p._id === page._id) return;
+      if (p.tags && p.tags.length) {
+        var overlap = 0;
+        page.tags.each(function(t) {
+          if (p.tags.data.some(function(pt) { return pt._id === t._id; })) overlap++;
+        });
+        if (overlap > 0) related.push({ post: p, score: overlap });
+      }
+    });
+    related.sort(function(a, b) { return b.score - a.score; });
+  }
+  if (related.length === 0) {
+    /* Fallback: recent posts */
+    site.posts.sort('date', -1).each(function(p) {
+      if (p._id !== page._id && related.length < 3) related.push({ post: p, score: 0 });
+    });
+  }
+  var limit = theme.post.related_posts.limit || 3;
+  related = related.slice(0, limit);
+%>
+<% if (related.length) { %>
+<section class="related-posts">
+  <h2 class="section-title">&#x1F4DA; <%= __('post.related') %></h2>
+  <div class="related-grid">
+    <% related.forEach(function(r) { %>
+    <%- partial('_partial/post-card', { post: r.post, layout: 'grid' }) %>
+    <% }) %>
+  </div>
+</section>
+<% } %>
+<% } %>

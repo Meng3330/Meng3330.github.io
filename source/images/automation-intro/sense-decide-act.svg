@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" font-family="Microsoft YaHei, SimHei, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="32" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">自动控制系统的三个核心环节</text>
+
+  <!-- Triangular layout: 感知(top), 决策(center), 执行(bottom) -->
+  <!-- But better as a circular flow: 感知 → 决策 → 执行 → back to 感知 -->
+
+  <!-- Center point -->
+  <!-- Arrange as a cycle -->
+
+  <!-- 感知 (top) -->
+  <circle cx="350" cy="90" r="70" fill="#e8f4fd" stroke="#4a90d9" stroke-width="3"/>
+  <text x="350" y="78" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c5282">感 知</text>
+  <text x="350" y="100" text-anchor="middle" font-size="12" fill="#4a7dbe">温度 · 压力 · 液位</text>
+  <text x="350" y="118" text-anchor="middle" font-size="12" fill="#4a7dbe">流量 · 转速 · 位置</text>
+  <text x="350" y="140" text-anchor="middle" font-size="11" fill="#888">传感器 / 变送器</text>
+
+  <!-- 执行 (bottom right) -->
+  <circle cx="560" cy="270" r="70" fill="#fff8f0" stroke="#e67e22" stroke-width="3"/>
+  <text x="560" y="258" text-anchor="middle" font-size="18" font-weight="bold" fill="#a0522d">执 行</text>
+  <text x="560" y="280" text-anchor="middle" font-size="12" fill="#b87333">调节阀 · 变频器</text>
+  <text x="560" y="298" text-anchor="middle" font-size="12" fill="#b87333">电机 · 气缸</text>
+  <text x="560" y="320" text-anchor="middle" font-size="11" fill="#888">执行器</text>
+
+  <!-- 决策 (center) -->
+  <circle cx="350" cy="270" r="70" fill="#f0f4ff" stroke="#6c5ce7" stroke-width="3"/>
+  <text x="350" y="258" text-anchor="middle" font-size="18" font-weight="bold" fill="#4a3fcf">决 策</text>
+  <text x="350" y="280" text-anchor="middle" font-size="12" fill="#6c5ce7">比较偏差</text>
+  <text x="350" y="298" text-anchor="middle" font-size="12" fill="#6c5ce7">计算控制量</text>
+  <text x="350" y="320" text-anchor="middle" font-size="11" fill="#888">控制器（PID等）</text>
+
+  <!-- Arrows forming a cycle -->
+  <!-- 感知 → 决策 -->
+  <path d="M370,155 L370,200" stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="382" y="180" font-size="10" fill="#555">测量值</text>
+
+  <!-- 决策 → 执行 -->
+  <path d="M410,245 L490,245" stroke="#555" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+  <text x="450" y="237" text-anchor="middle" font-size="10" fill="#555">控制信号</text>
+
+  <!-- 执行 → 感知 (feedback through plant) -->
+  <path d="M530,330 Q530,370 350,370 Q170,370 170,250 Q170,160 280,130" stroke="#27ae60" stroke-width="2" fill="none" stroke-dasharray="8,4" marker-end="url(#arrow)"/>
+  <text x="200" y="340" text-anchor="middle" font-size="11" fill="#27ae60">被控对象（设备 / 工艺过程）</text>
+
+  <!-- External arrow: 设定值 -->
+  <text x="150" y="160" text-anchor="middle" font-size="12" fill="#e74c3c">设定值（目标）</text>
+  <line x1="150" y1="168" x2="280" y2="168" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="280" y1="168" x2="300" y2="130" stroke="#e74c3c" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Bottom text -->
+  <text x="350" y="393" text-anchor="middle" font-size="11" fill="#888" font-style="italic">传感器感知现状 → 控制器比较偏差做决策 → 执行器改变现状 → 传感器再次感知…… 循环往复</text>
+</svg>

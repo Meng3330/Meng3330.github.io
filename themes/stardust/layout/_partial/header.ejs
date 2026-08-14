@@ -1,0 +1,37 @@
+<header id="stardust-header" class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="<%- url_for('/') %>" class="site-logo" aria-label="<%= config.title %>">
+      <img src="<%- url_for(theme.nav.logo || '/img/favicon.ico') %>" alt="logo" width="36" height="36">
+      <% if (theme.nav.display_title !== false) { %>
+      <span class="site-title"><%= config.title %></span>
+      <% } %>
+    </a>
+
+    <nav class="site-nav" role="navigation" aria-label="Main menu">
+      <% if (theme.nav.menu) {
+        Object.keys(theme.nav.menu).forEach(function(label) {
+          var item = theme.nav.menu[label];
+          var isActive = (item.path === '/' && is_home()) ||
+                         (item.path !== '/' && page.path && page.path.indexOf(item.path.replace(/\//g, '')) !== -1);
+      %>
+      <a href="<%- url_for(item.path) %>" class="nav-link<%= isActive ? ' active' : '' %>">
+        <% if (item.icon) { %><i class="<%= item.icon %>"></i><% } %>
+        <span><%= label %></span>
+      </a>
+      <% }) } %>
+    </nav>
+
+    <div class="header-actions">
+      <button id="search-toggle" aria-label="<%= __('search.placeholder') %>" title="<%= __('search.placeholder') %>">
+        <i class="icon-search">&#x1F50D;</i>
+      </button>
+      <button id="theme-toggle" aria-label="<%= __('dark_mode.auto') %>" title="<%= __('dark_mode.auto') %>">
+        <span class="icon-sun">&#x2600;</span>
+        <span class="icon-moon">&#x1F319;</span>
+      </button>
+      <button id="sidebar-toggle" class="mobile-only" aria-label="<%= __('nav.toggle_sidebar') %>">
+        <span>&#x2630;</span>
+      </button>
+    </div>
+  </div>
+</header>

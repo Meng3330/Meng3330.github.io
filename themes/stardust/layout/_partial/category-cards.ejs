@@ -1,0 +1,17 @@
+<% if (site.categories.length) { %>
+<section class="category-cards">
+  <h2 class="section-title"><%= __('home.category_nav') %></h2>
+  <div class="category-grid">
+    <% var cats = site.categories.sort('length').toArray().reverse().slice(0, 6); %>
+    <% cats.forEach(function(cat) { %>
+    <a href="<%- url_for(cat.path) %>" class="category-card">
+      <div class="category-card-inner">
+        <span class="category-icon"><%= cat.name.charAt(0) %></span>
+        <h3 class="category-name"><%= cat.name %></h3>
+        <span class="category-count"><%= cat.posts.length %> <%= __('category.count_unit') %></span>
+      </div>
+    </a>
+    <% }) %>
+  </div>
+</section>
+<% } %>

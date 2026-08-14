@@ -1,0 +1,32 @@
+<!-- Loading Overlay -->
+<div id="stardust-loading" class="loading-overlay" aria-hidden="true">
+  <canvas id="loading-canvas"></canvas>
+  <div class="loading-content">
+    <div class="loading-book-icon" id="loading-book">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <defs>
+          <linearGradient id="book-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:var(--accent);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:var(--purple);stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <g id="book-pages" transform="translate(60,60)">
+          <path d="M-30-40 L-30 40 L-8 34 L-8-34 Z" fill="url(#book-grad)" opacity="0.3">
+            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-26-38 L-26 38 L-4 32 L-4-32 Z" fill="url(#book-grad)" opacity="0.4">
+            <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" begin="0.2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-22-36 L-22 36 L0 30 L0-30 Z" fill="url(#book-grad)" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <rect x="38" y="88" width="44" height="4" rx="2" fill="var(--text-secondary)" opacity="0.3">
+          <animate attributeName="opacity" values="0.2;0.5;0.2" dur="1.5s" repeatCount="indefinite"/>
+        </rect>
+      </svg>
+    </div>
+    <p class="loading-quote" id="loading-quote"></p>
+    <p class="loading-status" id="loading-status"><%= __('loading.text') %></p>
+  </div>
+</div>

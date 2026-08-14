@@ -1,0 +1,36 @@
+<div class="home-page">
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-content">
+      <h1 class="hero-title"><%= theme.home.hero_title || config.title %></h1>
+      <p class="hero-subtitle" id="hero-subtitle"><%= theme.home.hero_subtitle || config.subtitle %></p>
+      <a href="#home-content" class="hero-cta btn btn-primary">
+        <span><%= __('home.explore') %></span>
+        <i class="icon-arrow-right"></i>
+      </a>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <i class="icon-chevron-down"></i>
+      </div>
+    </div>
+  </section>
+
+  <div class="home-content" id="home-content">
+    <!-- Category Navigation Cards -->
+    <%- partial('_partial/category-cards') %>
+
+    <!-- Featured Posts -->
+    <%- partial('_partial/featured-posts') %>
+
+    <!-- Latest Posts -->
+    <%- partial('_partial/latest-posts') %>
+
+    <!-- About Section -->
+    <%- partial('_partial/about-section') %>
+
+    <!-- Friend Links -->
+    <%- partial('_partial/friend-links') %>
+
+    <!-- Pagination -->
+    <%- partial('_partial/pagination') %>
+  </div>
+</div>

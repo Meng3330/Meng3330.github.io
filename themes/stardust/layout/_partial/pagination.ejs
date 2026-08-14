@@ -1,0 +1,51 @@
+<% if (page.total > 1) { %>
+<nav class="pagination" aria-label="Page navigation">
+  <%- paginator({
+    prev_text: '< ' + __('pagination.prev'),
+    next_text: __('pagination.next') + ' >',
+    escape: false,
+    space: '...',
+    mid_size: 2,
+    end_size: 1
+  }) %>
+</nav>
+<% } %>
+
+<style>
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 0 24px;
+}
+.pagination .page-number,
+.pagination .extend {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+  transition: all var(--anim-fast) var(--anim-ease);
+}
+.pagination .page-number:hover,
+.pagination .extend:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.pagination .current {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.pagination .space {
+  color: var(--text-muted);
+}
+</style>

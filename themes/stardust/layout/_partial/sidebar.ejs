@@ -1,0 +1,100 @@
+<aside id="stardust-sidebar" class="site-sidebar" role="complementary" aria-label="Sidebar">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="sidebar-inner">
+    <button class="sidebar-toggle-btn" id="sidebar-close-btn" aria-label="Close sidebar">&times;</button>
+
+    <!-- Author Card -->
+    <% if (theme.sidebar.author && theme.sidebar.author.enable !== false) { %>
+    <div class="sidebar-card author-card">
+      <img src="<%- url_for(theme.sidebar.author.avatar || theme.nav.logo || '/img/favicon.ico') %>"
+           alt="<%= config.author %>" class="author-avatar" width="80" height="80">
+      <h3><%= config.author %></h3>
+      <p><%= config.description %></p>
+      <div class="author-stats">
+        <div class="author-stat">
+          <span class="stat-num"><%= site.posts.length %></span>
+          <span class="stat-label"><%= __('archive.title') %></span>
+        </div>
+        <div class="author-stat">
+          <span class="stat-num"><%= site.categories.length %></span>
+          <span class="stat-label"><%= __('category.title') %></span>
+        </div>
+        <div class="author-stat">
+          <span class="stat-num"><%= site.tags.length %></span>
+          <span class="stat-label"><%= __('tag.title') %></span>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Categories -->
+    <% if (theme.sidebar.categories && theme.sidebar.categories.enable !== false && site.categories.length) { %>
+    <div class="sidebar-card">
+      <h4><%= __('category.title') %></h4>
+      <ul>
+        <% site.categories.sort('name').each(function(cat) { %>
+        <li>
+          <a href="<%- url_for(cat.path) %>">
+            <%= cat.name %>
+            <span><%= cat.posts.length %></span>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+    <% } %>
+
+    <!-- Tags -->
+    <% if (theme.sidebar.tags && theme.sidebar.tags.enable !== false && site.tags.length) { %>
+    <div class="sidebar-card">
+      <h4><%= __('tag.title') %></h4>
+      <div class="sidebar-tags">
+        <% var tags = site.tags.sort('length').toArray().slice(0, theme.sidebar.tags.limit || 20); %>
+        <% tags.forEach(function(tag) { %>
+        <a href="<%- url_for(tag.path) %>"># <%= tag.name %></a>
+        <% }) %>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Recent Posts -->
+    <% if (theme.sidebar.recent_posts && theme.sidebar.recent_posts.enable !== false) { %>
+    <div class="sidebar-card">
+      <h4><%= __('home.latest') %></h4>
+      <% site.posts.sort('date', -1).limit(theme.sidebar.recent_posts.limit || 5).each(function(post) { %>
+      <div class="sidebar-post-item">
+        <% if (post.cover) { %>
+        <img src="<%= post.cover %>" alt="" class="sidebar-post-cover" loading="lazy">
+        <% } %>
+        <div class="sidebar-post-info">
+          <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+          <time datetime="<%= date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, 'MM-DD') %></time>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+    <% } %>
+
+    <!-- Archives -->
+    <% if (theme.sidebar.archives && theme.sidebar.archives.enable !== false) { %>
+    <div class="sidebar-card">
+      <h4><%= __('archive.title') %></h4>
+      <ul>
+        <% var archives = {}; site.posts.each(function(p) {
+          var ym = date(p.date, 'YYYY-MM');
+          if (!archives[ym]) archives[ym] = 0;
+          archives[ym]++;
+        });
+        Object.keys(archives).sort().reverse().slice(0, theme.sidebar.archives.limit || 8).forEach(function(ym) { %>
+        <li>
+          <a href="<%- url_for('/archives/' + ym.replace('-', '/') + '/') %>">
+            <%= ym %>
+            <span><%= archives[ym] %></span>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+    <% } %>
+  </div>
+</aside>

@@ -1,0 +1,11 @@
+<% var featured = site.posts.filter(p => p.featured).sort('date', -1).limit(theme.home.featured_count || 3); %>
+<% if (featured.length) { %>
+<section class="featured-posts">
+  <h2 class="section-title">&#x2B50; <%= __('home.featured') %></h2>
+  <div class="featured-grid">
+    <% featured.forEach(function(post, i) { %>
+    <%- partial('_partial/post-card', { post: post, layout: i === 0 ? 'featured' : 'grid' }) %>
+    <% }) %>
+  </div>
+</section>
+<% } %>

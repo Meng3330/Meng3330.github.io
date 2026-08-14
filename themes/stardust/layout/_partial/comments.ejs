@@ -1,0 +1,9 @@
+<% if (theme.comments && theme.comments.enable && is_post()) { %>
+<section id="comments" class="post-comments">
+  <h3>&#x1F4AC; <%= __('post.comment') %></h3>
+  <div id="comment-container">
+    <!-- Comment system placeholder. Configure via theme._config.yml -->
+    <!-- Supported: Giscus, Waline, Twikoo, etc. -->
+  </div>
+</section>
+<% } %>

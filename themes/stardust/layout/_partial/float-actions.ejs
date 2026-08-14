@@ -1,0 +1,29 @@
+<div id="stardust-floats" class="float-actions" role="navigation" aria-label="Quick actions">
+  <% if (theme.float_actions.scroll_top !== false) { %>
+  <button id="btn-scroll-top" class="float-btn" aria-label="<%= __('float.scroll_top') %>" style="display:none">
+    <svg class="progress-ring" width="48" height="48" aria-hidden="true">
+      <circle class="progress-ring-bg" cx="24" cy="24" r="20"/>
+      <circle class="progress-ring-fill" cx="24" cy="24" r="20" id="progress-circle"/>
+    </svg>
+    <span class="icon-arrow-up">&#x2191;</span>
+  </button>
+  <% } %>
+
+  <% if (theme.float_actions.toc !== false && is_post()) { %>
+  <button id="btn-toc-float" class="float-btn" aria-label="<%= __('float.toc') %>" title="<%= __('float.toc') %>">
+    <span>&#x2630;</span>
+  </button>
+  <% } %>
+
+  <% if (theme.float_actions.share !== false) { %>
+  <button id="btn-share-float" class="float-btn" aria-label="<%= __('float.share') %>" title="<%= __('float.share') %>">
+    <span>&#x21AA;</span>
+  </button>
+  <% } %>
+
+  <% if (theme.float_actions.comment !== false && is_post()) { %>
+  <button id="btn-comment-float" class="float-btn" aria-label="<%= __('float.comment') %>" title="<%= __('float.comment') %>">
+    <span>&#x1F4AC;</span>
+  </button>
+  <% } %>
+</div>

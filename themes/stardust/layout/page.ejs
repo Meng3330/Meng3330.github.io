@@ -1,0 +1,32 @@
+<% if (page.type === '404') { %>
+<div class="error-404-page">
+  <div class="error-content">
+    <h1 class="error-code">404</h1>
+    <p class="error-message"><%= __('error404.subtitle') %></p>
+    <a href="<%- url_for('/') %>" class="btn btn-primary"><%= __('error404.back_home') %></a>
+  </div>
+</div>
+<% } else { %>
+<article class="page-content">
+  <% if (page.title && !page.hide_title) { %>
+  <h1 class="page-title"><%= page.title %></h1>
+  <% } %>
+  <% if (page.toc && page.toc.length > 1 && theme.post.toc.enable) { %>
+  <div class="page-body-wrapper">
+    <div class="page-body">
+      <%- page.content %>
+    </div>
+    <aside class="page-toc-sidebar">
+      <nav class="toc-widget">
+        <h4 class="toc-title"><%= __('post.toc') %></h4>
+        <%- toc(page.content, { list_number: theme.post.toc.number, max_depth: theme.post.toc.depth || 4 }) %>
+      </nav>
+    </aside>
+  </div>
+  <% } else { %>
+  <div class="page-body">
+    <%- page.content %>
+  </div>
+  <% } %>
+</article>
+<% } %>

@@ -1,0 +1,38 @@
+<div class="archive-page">
+  <h1 class="page-title"><%= __('archive.title') %></h1>
+
+  <%
+  var postsByYear = {};
+  page.posts.each(function(post) {
+    var y = date(post.date, 'YYYY');
+    if (!postsByYear[y]) postsByYear[y] = [];
+    postsByYear[y].push(post);
+  });
+  var years = Object.keys(postsByYear).sort().reverse();
+  %>
+
+  <% if (years.length) { %>
+  <div class="archive-timeline">
+    <% years.forEach(function(year) { %>
+    <div class="timeline-year">
+      <div class="timeline-dot"></div>
+      <h2 class="timeline-year-title"><%= year %></h2>
+      <div class="timeline-posts">
+        <% postsByYear[year].forEach(function(post) { %>
+        <div class="timeline-item">
+          <time class="timeline-date" datetime="<%= date(post.date, 'YYYY-MM-DD') %>">
+            <%= date(post.date, 'MM-DD') %>
+          </time>
+          <a href="<%- url_for(post.path) %>" class="timeline-title"><%= post.title %></a>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+  <p class="no-content"><%= __('home.no_posts') %></p>
+  <% } %>
+
+  <%- partial('_partial/pagination') %>
+</div>

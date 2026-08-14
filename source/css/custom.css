@@ -1,0 +1,702 @@
+/* ============================================
+   Fomalhaut🥝 Custom Theme - Winter Anime Style
+   ============================================ */
+
+/* ----- Google Fonts ----- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
+
+/* ==========================================
+   Body Background - Winter Gradient
+   ========================================== */
+body {
+  background: linear-gradient(160deg,
+    #e3f2fd 0%,
+    #e8f5fd 15%,
+    #f0f4f8 30%,
+    #f5f0f5 50%,
+    #f8f6f0 70%,
+    #e8f5fd 85%,
+    #e3f2fd 100%);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+[data-theme="dark"] body {
+  background: linear-gradient(160deg,
+    #0d1117 0%,
+    #111820 20%,
+    #131a24 40%,
+    #111a22 60%,
+    #0f1820 80%,
+    #0d1117 100%);
+  background-attachment: fixed;
+}
+
+/* Subtle animated gradient for body */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(150, 200, 240, 0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 20%, rgba(200, 180, 220, 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 60% 80%, rgba(180, 220, 210, 0.07) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: bgShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* ==========================================
+   CSS Variables - Light/Dark Theme Colors
+   ========================================== */
+:root {
+  --custom-primary: #64b5f6;
+  --custom-primary-light: #90caf9;
+  --custom-primary-dark: #42a5f5;
+  --custom-accent: #4dd0e1;
+  --custom-accent2: #80cbc4;
+  --custom-pink: #f8bbd0;
+  --custom-pink-light: #fce4ec;
+  --custom-warm: #ffe0b2;
+  --nav-bg: rgba(255, 255, 255, 0.72);
+  --nav-bg-scroll: rgba(255, 255, 255, 0.88);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-bg-hover: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 8px 32px rgba(100, 180, 255, 0.12);
+  --text-primary: #37474f;
+  --text-secondary: #607d8b;
+  --snow-color-1: rgba(255, 255, 255, 0.9);
+  --snow-color-2: rgba(220, 240, 255, 0.7);
+  --progress-bar: linear-gradient(90deg, #64b5f6, #4dd0e1, #80cbc4);
+}
+
+[data-theme="dark"] {
+  --custom-primary: #64b5f6;
+  --custom-primary-light: #90caf9;
+  --custom-accent: #4dd0e1;
+  --nav-bg: rgba(18, 24, 36, 0.72);
+  --nav-bg-scroll: rgba(18, 24, 36, 0.9);
+  --card-bg: rgba(30, 40, 55, 0.8);
+  --card-bg-hover: rgba(30, 40, 55, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --text-primary: #e0e0e0;
+  --text-secondary: #90a4ae;
+}
+
+/* ==========================================
+   Snow Canvas Layer
+   ========================================== */
+#snow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+/* ==========================================
+   Page Loading Progress Bar
+   ========================================== */
+#load-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: var(--progress-bar);
+  z-index: 100001;
+  transition: width 0.3s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ==========================================
+   Glassmorphism Navbar
+   ========================================== */
+#page-header.nav-fixed #nav {
+  background: var(--nav-bg-scroll) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 20px rgba(100, 150, 200, 0.08);
+}
+
+#nav {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(240, 245, 255, 0.7) 30%,
+    rgba(245, 240, 255, 0.72) 60%,
+    rgba(255, 240, 245, 0.7) 100%) !important;
+  backdrop-filter: blur(15px) saturate(160%);
+  -webkit-backdrop-filter: blur(15px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="dark"] #nav {
+  background: linear-gradient(135deg,
+    rgba(18, 24, 40, 0.78) 0%,
+    rgba(22, 28, 48, 0.75) 50%,
+    rgba(20, 26, 44, 0.78) 100%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Navbar menu items hover effect */
+#nav .menus_items .site-page {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+#nav .menus_items .site-page::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--custom-primary), var(--custom-accent));
+  transition: all 0.35s ease;
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+#nav .menus_items .site-page:hover::after {
+  width: 70%;
+}
+
+#nav .menus_items .site-page:hover {
+  color: var(--custom-primary) !important;
+  transform: translateY(-1px);
+}
+
+/* ==========================================
+   Hero Section - Fullscreen Cover
+   ========================================== */
+#page-header.full_page {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+#page-header.full_page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(100, 180, 240, 0.15) 0%,
+    rgba(180, 220, 255, 0.1) 30%,
+    rgba(255, 255, 255, 0.02) 70%,
+    rgba(255, 255, 255, 0.85) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+[data-theme="dark"] #page-header.full_page::before {
+  background: linear-gradient(180deg,
+    rgba(30, 50, 80, 0.3) 0%,
+    rgba(30, 45, 70, 0.2) 50%,
+    rgba(18, 24, 36, 0.9) 100%);
+}
+
+#site-title {
+  font-family: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive, sans-serif;
+  font-size: 3.8rem !important;
+  text-shadow: 0 0 30px rgba(150, 210, 255, 0.5),
+               0 0 60px rgba(150, 210, 255, 0.3),
+               2px 4px 8px rgba(0, 0, 0, 0.1);
+  animation: titleGlow 3s ease-in-out infinite alternate;
+  letter-spacing: 4px;
+}
+
+@keyframes titleGlow {
+  0% { text-shadow: 0 0 20px rgba(150, 210, 255, 0.4), 0 0 40px rgba(150, 210, 255, 0.2); }
+  100% { text-shadow: 0 0 35px rgba(150, 210, 255, 0.6), 0 0 70px rgba(150, 210, 255, 0.4); }
+}
+
+#site-subtitle {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Scroll down arrow animation */
+.scroll-down-effects {
+  animation: bounceDown 2s ease-in-out infinite;
+  font-size: 2rem;
+  color: var(--custom-primary) !important;
+  opacity: 0.8;
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); opacity: 0.8; }
+  50% { transform: translateY(12px); opacity: 0.4; }
+}
+
+/* ==========================================
+   Card Glassmorphism Effects
+   ========================================== */
+.card-widget,
+#recent-posts > .recent-post-item,
+.cardHover,
+#aside-content .card-widget,
+.layout > div:first-child:not(.recent-posts) {
+  background: var(--card-bg) !important;
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--glass-shadow);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-widget:hover,
+#recent-posts > .recent-post-item:hover {
+  background: var(--card-bg-hover) !important;
+  box-shadow: 0 12px 40px rgba(100, 180, 255, 0.18);
+  transform: translateY(-4px);
+}
+
+[data-theme="dark"] .card-widget:hover,
+[data-theme="dark"] #recent-posts > .recent-post-item:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================
+   Recent Posts Cards - Envelope Style
+   ========================================== */
+#recent-posts > .recent-post-item {
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+#recent-posts > .recent-post-item .post_cover {
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+#recent-posts > .recent-post-item:hover .post_cover img {
+  transform: scale(1.06);
+  transition: transform 0.8s ease;
+}
+
+#recent-posts > .recent-post-item .post_cover img {
+  transition: transform 0.8s ease;
+}
+
+/* Article title styling */
+#recent-posts > .recent-post-item .article-title a {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--text-primary), var(--custom-primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+}
+
+#recent-posts > .recent-post-item .article-title a:hover {
+  background: linear-gradient(90deg, var(--custom-primary), var(--custom-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sticky post badge */
+#recent-posts > .recent-post-item .sticky {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4) !important;
+  color: #fff !important;
+  border-radius: 8px;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+}
+
+/* ==========================================
+   Category/Tag Pills
+   ========================================== */
+.category-list-count,
+.tag-list-count {
+  background: linear-gradient(135deg, var(--custom-primary-light), var(--custom-accent));
+  color: #fff !important;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+}
+
+/* ==========================================
+   Custom Scrollbar
+   ========================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(240, 245, 255, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--custom-primary-light), var(--custom-accent));
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--custom-primary), var(--custom-accent2));
+}
+
+/* ==========================================
+   Button Styles
+   ========================================== */
+a.button,
+button,
+.btn,
+#aside-content .card-widget .item-headline,
+.paginator .page-number {
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Pagination buttons */
+#pagination .page-number {
+  border-radius: 10px !important;
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+}
+
+#pagination .page-number.current {
+  background: linear-gradient(135deg, var(--custom-primary), var(--custom-accent)) !important;
+  color: #fff !important;
+  border: none;
+  box-shadow: 0 4px 15px rgba(100, 180, 240, 0.35);
+}
+
+/* Read more / buttons */
+a.button--primary,
+.btn-primary {
+  background: linear-gradient(135deg, var(--custom-primary), var(--custom-accent)) !important;
+  border: none !important;
+  border-radius: 20px !important;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(100, 180, 240, 0.3);
+  transition: all 0.3s ease;
+}
+
+a.button--primary:hover,
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(100, 180, 240, 0.45);
+}
+
+/* ==========================================
+   TOC (Table of Contents) Styling
+   ========================================== */
+#card-toc .toc-link {
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+#card-toc .toc-link.active {
+  background: linear-gradient(90deg, rgba(100, 180, 240, 0.15), transparent);
+  color: var(--custom-primary) !important;
+  font-weight: 600;
+  border-left: 3px solid var(--custom-primary);
+}
+
+/* ==========================================
+   Footer Enhancement
+   ========================================== */
+#footer {
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(240, 245, 255, 0.8) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(180, 210, 240, 0.25);
+}
+
+[data-theme="dark"] #footer {
+  background: linear-gradient(180deg,
+    rgba(18, 24, 36, 0.6) 0%,
+    rgba(22, 28, 44, 0.8) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+#footer .copyright {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================
+   Post Page Enhancements
+   ========================================== */
+#post {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+}
+
+/* Post meta icons */
+#post-meta i {
+  color: var(--custom-primary);
+  margin-right: 4px;
+}
+
+/* Blockquote */
+blockquote {
+  border-left: 4px solid var(--custom-primary-light) !important;
+  background: rgba(100, 180, 240, 0.05) !important;
+  border-radius: 0 12px 12px 0;
+  padding: 12px 20px;
+  margin: 16px 0;
+}
+
+/* Code blocks */
+figure.highlight {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================
+   Animation Keyframes
+   ========================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(100, 180, 240, 0.4); }
+  50% { box-shadow: 0 0 0 15px rgba(100, 180, 240, 0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Staggered fade-in for post cards */
+#recent-posts > .recent-post-item {
+  animation: fadeInUp 0.6s ease both;
+}
+
+#recent-posts > .recent-post-item:nth-child(1) { animation-delay: 0.1s; }
+#recent-posts > .recent-post-item:nth-child(2) { animation-delay: 0.2s; }
+#recent-posts > .recent-post-item:nth-child(3) { animation-delay: 0.3s; }
+#recent-posts > .recent-post-item:nth-child(4) { animation-delay: 0.4s; }
+#recent-posts > .recent-post-item:nth-child(5) { animation-delay: 0.5s; }
+#recent-posts > .recent-post-item:nth-child(n+6) { animation-delay: 0.6s; }
+
+/* ==========================================
+   Avatar pulse effect
+   ========================================== */
+.avatar-img img {
+  border-radius: 50%;
+  border: 3px solid var(--custom-primary-light);
+  animation: pulse 3s infinite;
+  transition: transform 0.4s ease;
+}
+
+.avatar-img img:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* ==========================================
+   Responsive adjustments
+   ========================================== */
+@media screen and (max-width: 768px) {
+  #site-title {
+    font-size: 2.5rem !important;
+  }
+
+  #site-subtitle {
+    font-size: 1.1rem;
+  }
+
+  #post {
+    padding: 1.2rem;
+    border-radius: 12px;
+  }
+
+  .card-widget,
+  #recent-posts > .recent-post-item {
+    border-radius: 12px !important;
+  }
+}
+
+/* ==========================================
+   Copy notification toast
+   ========================================== */
+.copy-notice {
+  position: fixed;
+  background: linear-gradient(135deg, var(--custom-primary), var(--custom-accent));
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  z-index: 100001;
+  pointer-events: none;
+  box-shadow: 0 4px 15px rgba(100, 180, 240, 0.4);
+}
+
+/* ==========================================
+   Left sidebar nav (post series)
+   ========================================== */
+#aside-content .card-post-series {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Tags cloud */
+#aside-content .card-tag-cloud a {
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  background: rgba(100, 180, 240, 0.08);
+  color: var(--custom-primary-dark);
+}
+
+#aside-content .card-tag-cloud a:hover {
+  background: linear-gradient(135deg, var(--custom-primary), var(--custom-accent));
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   Dark mode toggle button
+   ========================================== */
+#darkmode_button {
+  transition: transform 0.5s ease;
+}
+
+#darkmode_button:hover {
+  transform: rotate(30deg);
+}
+
+/* ==========================================
+   Site subtitle typewriter effect area
+   ========================================== */
+#subtitle {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* ==========================================
+   Announcement card
+   ========================================== */
+#card-announcement .announcement {
+  border-left: 3px solid var(--custom-primary-light);
+  padding-left: 12px;
+  border-radius: 0 8px 8px 0;
+}
+
+/* ==========================================
+   Related posts
+   ========================================== */
+.relatedPosts > .relatedPosts-list > div {
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  transition: all 0.35s ease;
+}
+
+.relatedPosts > .relatedPosts-list > div:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(100, 180, 240, 0.15);
+}
+
+/* ==========================================
+   Image lightbox enhancements
+   ========================================== */
+#article-container img {
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#article-container img:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================
+   Horizontal rule divider
+   ========================================== */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--custom-primary-light), var(--custom-accent), var(--custom-primary-light), transparent);
+  margin: 2rem 0;
+}
+
+/* ==========================================
+   Admin/performance panel (bottom-left)
+   ========================================== */
+#perf-panel {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  color: #90caf9;
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+  padding: 8px 14px;
+  border-radius: 20px;
+  z-index: 99998;
+  line-height: 1.6;
+  border: 1px solid rgba(100, 180, 240, 0.2);
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+#perf-panel span {
+  color: #4dd0e1;
+}
+
+/* ==========================================
+   Sakura petals (optional CSS petals)
+   ========================================== */
+.sakura-petal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99997;
+  opacity: 0.7;
+  animation: petalFall linear infinite;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}

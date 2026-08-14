@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'zh-CN' %>" data-theme="light">
+<%- partial('_partial/head') %>
+<%
+var bodyClass = 'home-page';
+if (is_post()) bodyClass = 'post-page';
+else if (is_archive()) bodyClass = 'archive-page';
+else if (is_category()) bodyClass = 'category-page';
+else if (is_tag()) bodyClass = 'tag-page';
+else if (is_home()) bodyClass = 'home-page';
+else bodyClass = 'page-page';
+%>
+<body class="<%= bodyClass %>">
+  <%- partial('_partial/loading') %>
+
+  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+
+  <%- partial('_partial/header') %>
+
+  <%- partial('_partial/sidebar') %>
+
+  <main class="main-content" id="content-inner">
+    <%- body %>
+  </main>
+
+  <%- partial('_partial/footer') %>
+
+  <%- partial('_partial/float-actions') %>
+
+  <!-- Scripts -->
+  <script src="<%- url_for('/js/starfield.js') %>"></script>
+  <script src="<%- url_for('/js/dark-mode.js') %>"></script>
+  <script src="<%- url_for('/js/header.js') %>"></script>
+  <script src="<%- url_for('/js/sidebar.js') %>"></script>
+  <script src="<%- url_for('/js/float-actions.js') %>"></script>
+  <script src="<%- url_for('/js/toc.js') %>"></script>
+  <script src="<%- url_for('/js/easter-eggs.js') %>"></script>
+  <script src="<%- url_for('/js/loading.js') %>"></script>
+  <script src="<%- url_for('/js/main.js') %>"></script>
+</body>
+</html>

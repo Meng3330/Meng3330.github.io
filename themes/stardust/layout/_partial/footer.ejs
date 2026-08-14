@@ -1,0 +1,51 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4><%= config.title %></h4>
+      <p><%= config.description %></p>
+      <% if (theme.social) { %>
+      <div class="footer-social">
+        <% Object.keys(theme.social).forEach(function(name) {
+          var s = theme.social[name]; %>
+        <a href="<%= s.url %>" target="_blank" rel="noopener" aria-label="<%= name %>"
+           style="<%= s.color ? '--hover-color:' + s.color : '' %>">
+          <span><%= name.charAt(0).toUpperCase() %></span>
+        </a>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+    <div class="footer-col">
+      <h4><%= __('nav.home') %></h4>
+      <div class="footer-links">
+        <a href="<%- url_for('/') %>"><%= __('nav.home') %></a>
+        <a href="<%- url_for('/archives/') %>"><%= __('nav.archives') %></a>
+        <a href="<%- url_for('/categories/') %>"><%= __('nav.categories') %></a>
+        <a href="<%- url_for('/tags/') %>"><%= __('nav.tags') %></a>
+        <a href="<%- url_for('/about/') %>"><%= __('nav.about') %></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4><%= __('post.share') %></h4>
+      <% if (theme.social) {
+        Object.keys(theme.social).forEach(function(name) {
+          var s = theme.social[name]; %>
+        <a href="<%= s.url %>" target="_blank" rel="noopener"><%= name %></a>
+      <% }) } %>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>
+      <% if (theme.footer.copyright) { %>
+      &copy; <%= theme.footer.since || '2025' %><% if (new Date().getFullYear() > (theme.footer.since || 2025)) { %>-<%= new Date().getFullYear() %><% } %>
+      <%= config.author %>.
+      <% } %>
+      <%= __('footer.powered_by') %> | <%= __('footer.theme') %> 星尘图书馆
+    </p>
+    <% if (theme.footer.runtime) { %>
+    <p>
+      <%= __('footer.runtime_prefix') %>: <span class="footer-runtime" id="site-runtime">--</span>
+    </p>
+    <% } %>
+  </div>
+</footer>

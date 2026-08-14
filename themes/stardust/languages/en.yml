@@ -1,0 +1,97 @@
+nav:
+  home: Home
+  archives: Archives
+  categories: Categories
+  tags: Tags
+  about: About
+  guestbook: Guestbook
+  search: Search
+  toggle_sidebar: Toggle Sidebar
+
+home:
+  featured: Featured Posts
+  latest: Latest Posts
+  view_all: View All
+  read_more: Read More
+  about_me: About Me
+  friend_links: Friends
+  apply_flink: Apply Link
+  explore: Start Exploring
+  category_nav: Categories
+  no_posts: No posts yet
+
+post:
+  toc: Table of Contents
+  copyright_title: Copyright Notice
+  copyright_author: Author
+  copyright_link: Link
+  copyright_license: License
+  prev: Previous
+  next: Next
+  related: Related Posts
+  updated: Updated
+  created: Posted
+  wordcount: Words
+  readtime: Read time
+  readtime_unit: min
+  tags: Tags
+  categories: Categories
+  share: Share
+  comment: Comments
+  no_content: No content
+
+archive:
+  title: Archives
+  total: "%d posts in total"
+
+category:
+  title: Categories
+  count_unit: posts
+
+tag:
+  title: Tags
+
+about:
+  title: About Me
+  skills: Skills
+  experience: Experience
+
+guestbook:
+  title: Stardust Messages
+  subtitle: Leave your starlight here
+
+footer:
+  powered_by: Powered by Hexo
+  theme: Theme
+  runtime_prefix: Running for
+  day: d
+  hour: h
+  minute: m
+
+pagination:
+  prev: Prev
+  next: Next
+
+loading:
+  text: Gathering stardust...
+  timeout: Stardust got lost, click to retry
+  error: Signal lost, please check your connection
+
+error404:
+  title: "404"
+  subtitle: Page not found ~ Lost in stardust
+  back_home: Back to Home
+
+dark_mode:
+  light: Light
+  dark: Dark
+  auto: Auto
+
+search:
+  placeholder: Search...
+
+float:
+  scroll_top: Back to Top
+  toc: Contents
+  share: Share
+  comment: Comments

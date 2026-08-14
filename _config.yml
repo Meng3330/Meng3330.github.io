@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: hojun
-subtitle:
-description: 好少年光芒万丈
-keywords:
-author: hojun
-language: zh-cn
-timezone:
+title: Meng
+subtitle: Hope you have a nice day!!
+description: Meng's Blog
+keywords: Hexo,Butterfly,博客,技术,教程
+author: Meng
+language: zh-CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -75,7 +75,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: butterfly
+theme: stardust
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

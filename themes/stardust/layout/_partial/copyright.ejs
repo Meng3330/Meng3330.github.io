@@ -1,0 +1,14 @@
+<% if (theme.post.copyright && theme.post.copyright.enable && is_post()) { %>
+<div class="copyright-card">
+  <div class="copyright-title">&#x1F4DC; <%= __('post.copyright_title') %></div>
+  <ul>
+    <li><strong><%= __('post.copyright_author') %>:</strong> <%= config.author %></li>
+    <li><strong><%= __('post.copyright_link') %>:</strong> <a href="<%= page.permalink %>"><%= page.permalink %></a></li>
+    <% if (theme.post.copyright.license) { %>
+    <li><strong><%= __('post.copyright_license') %>:</strong>
+      <a href="<%= theme.post.copyright.license_url %>" target="_blank" rel="noopener"><%= theme.post.copyright.license %></a>
+    </li>
+    <% } %>
+  </ul>
+</div>
+<% } %>

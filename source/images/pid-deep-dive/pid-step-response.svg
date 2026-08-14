@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="Microsoft YaHei, SimHei, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="380" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">不同控制策略下的阶跃响应对比</text>
+
+  <!-- ====== Coordinate axes ====== -->
+  <!-- Origin at (80, 420), x-axis 640px, y-axis up to 350px -->
+  <!-- X axis -->
+  <line x1="80" y1="420" x2="720" y2="420" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="730" y="424" font-size="12" fill="#555">t</text>
+  <!-- Y axis -->
+  <line x1="80" y1="420" x2="80" y2="70" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="65" y="78" text-anchor="end" font-size="12" fill="#555">y(t)</text>
+
+  <!-- Y axis labels -->
+  <line x1="75" y1="120" x2="85" y2="120" stroke="#333" stroke-width="1"/>
+  <text x="72" y="124" text-anchor="end" font-size="11" fill="#888">1.4</text>
+  <line x1="75" y1="170" x2="85" y2="170" stroke="#333" stroke-width="1"/>
+  <text x="72" y="174" text-anchor="end" font-size="11" fill="#888">1.2</text>
+  <line x1="75" y1="220" x2="85" y2="220" stroke="#333" stroke-width="1"/>
+  <text x="72" y="224" text-anchor="end" font-size="11" fill="#888">1.0</text>
+  <!-- Setpoint line -->
+  <line x1="80" y1="220" x2="720" y2="220" stroke="#999" stroke-width="1" stroke-dasharray="6,3"/>
+  <text x="690" y="216" font-size="11" fill="#888">设定值（目标）</text>
+
+  <line x1="75" y1="270" x2="85" y2="270" stroke="#333" stroke-width="1"/>
+  <text x="72" y="274" text-anchor="end" font-size="11" fill="#888">0.8</text>
+  <line x1="75" y1="320" x2="85" y2="320" stroke="#333" stroke-width="1"/>
+  <text x="72" y="324" text-anchor="end" font-size="11" fill="#888">0.6</text>
+  <line x1="75" y1="370" x2="85" y2="370" stroke="#333" stroke-width="1"/>
+  <text x="72" y="374" text-anchor="end" font-size="11" fill="#888">0.4</text>
+
+  <!-- X axis labels (time ticks) -->
+  <text x="160" y="440" text-anchor="middle" font-size="11" fill="#888">2</text>
+  <text x="240" y="440" text-anchor="middle" font-size="11" fill="#888">4</text>
+  <text x="320" y="440" text-anchor="middle" font-size="11" fill="#888">6</text>
+  <text x="400" y="440" text-anchor="middle" font-size="11" fill="#888">8</text>
+  <text x="480" y="440" text-anchor="middle" font-size="11" fill="#888">10</text>
+  <text x="560" y="440" text-anchor="middle" font-size="11" fill="#888">12</text>
+  <text x="640" y="440" text-anchor="middle" font-size="11" fill="#888">14</text>
+
+  <!-- ====== P-only response (blue) - oscillatory approach ====== -->
+  <path d="M80,420
+           Q90,420 100,400
+           Q130,310 160,250
+           Q190,210 210,225
+           Q240,260 270,245
+           Q300,235 330,240
+           Q360,242 390,240"
+        stroke="#4a90d9" stroke-width="2.5" fill="none"/>
+  <text x="160" y="245" font-size="11" fill="#4a90d9" transform="rotate(-15, 160, 245)">P 控制（有稳态误差）</text>
+
+  <!-- Horizontal asymptote for P (at ~240 = 0.9) -->
+  <line x1="390" y1="240" x2="660" y2="240" stroke="#4a90d9" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <!-- Steady-state error bracket -->
+  <line x1="660" y1="240" x2="680" y2="240" stroke="#e74c3c" stroke-width="1"/>
+  <line x1="680" y1="240" x2="680" y2="220" stroke="#e74c3c" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="695" y="234" font-size="10" fill="#e74c3c">稳态误差</text>
+
+  <!-- ====== PI response (green) - slower but no error ====== -->
+  <path d="M80,420
+           Q95,420 110,395
+           Q150,300 190,240
+           Q220,215 260,200
+           Q320,195 380,205
+           Q440,215 500,216
+           Q580,218 700,218"
+        stroke="#27ae60" stroke-width="2.5" fill="none"/>
+  <text x="300" y="192" font-size="11" fill="#27ae60" transform="rotate(-5, 300, 192)">PI 控制（无稳态误差，响应偏慢）</text>
+
+  <!-- ====== PID response (red) - fast with slight overshoot ====== -->
+  <path d="M80,420
+           Q92,420 105,390
+           Q130,310 160,200
+           Q180,140 200,130
+           Q230,160 260,180
+           Q320,195 400,205
+           Q500,212 620,217
+           Q680,218 720,218"
+        stroke="#e74c3c" stroke-width="2.5" fill="none"/>
+  <text x="280" y="148" font-size="11" fill="#e74c3c" transform="rotate(10, 280, 148)">PID 控制（快速响应，轻微超调）</text>
+
+  <!-- ====== Overshoot annotation ====== -->
+  <line x1="160" y1="200" x2="160" y2="220" stroke="#e74c3c" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <text x="162" y="213" font-size="10" fill="#e74c3c">超调量</text>
+  <line x1="160" y1="130" x2="160" y2="200" stroke="#e74c3c" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- ====== Rise time annotation on PID ====== -->
+  <line x1="80" y1="370" x2="160" y2="370" stroke="#e74c3c" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <text x="110" y="363" text-anchor="middle" font-size="10" fill="#e74c3c">上升时间</text>
+
+  <!-- ====== Legend ====== -->
+  <rect x="80" y="455" width="600" height="50" rx="6" fill="#f8f9fa" stroke="#ddd" stroke-width="1"/>
+  <line x1="100" y1="480" x2="140" y2="480" stroke="#4a90d9" stroke-width="2.5"/>
+  <text x="145" y="484" font-size="12" fill="#333">P 控制</text>
+  <line x1="230" y1="480" x2="270" y2="480" stroke="#27ae60" stroke-width="2.5"/>
+  <text x="275" y="484" font-size="12" fill="#333">PI 控制</text>
+  <line x1="370" y1="480" x2="410" y2="480" stroke="#e74c3c" stroke-width="2.5"/>
+  <text x="415" y="484" font-size="12" fill="#333">PID 控制</text>
+  <line x1="530" y1="480" x2="560" y2="480" stroke="#999" stroke-width="1" stroke-dasharray="6,3"/>
+  <text x="565" y="484" font-size="12" fill="#333">设定值</text>
+</svg>
