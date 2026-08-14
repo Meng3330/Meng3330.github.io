@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+<title>反馈、PID 与工程实践 | Meng</title>
+
+<meta name="description" content="参悟反馈的本质">
+<meta name="keywords" content="PID控制,反馈控制,自动化,控制工程,闭环控制,PID整定,Ziegler-Nichols,积分饱和">
+<meta name="author" content="Meng">
+
+<link rel="icon" href="/img/avatar.svg">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Styles -->
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- KaTeX for math rendering -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="反馈、PID 与工程实践">
+<meta property="og:description" content="参悟反馈的本质">
+<meta property="og:url" content="https://mengweikuo.icu/2026/06/07/deep-dive-closed-loop-control/">
+<meta property="og:site_name" content="Meng">
+
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="反馈、PID 与工程实践">
+<meta name="twitter:description" content="参悟反馈的本质">
+
+
+<link rel="alternate" href="/atom.xml" type="application/atom+xml" title="Meng">
+
+
+<!-- Anti-FOUC: set data-theme before first paint -->
+<script>
+(function() {
+  var theme = localStorage.getItem('stardust-theme');
+  if (!theme || theme === 'auto') {
+    var hour = new Date().getHours();
+    var darkStart = 19;
+    var darkEnd = 7;
+    theme = (hour >= darkStart || hour < darkEnd) ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+
+
+<body class="post-page">
+  <!-- Loading Overlay -->
+<div id="stardust-loading" class="loading-overlay" aria-hidden="true">
+  <canvas id="loading-canvas"></canvas>
+  <div class="loading-content">
+    <div class="loading-book-icon" id="loading-book">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <defs>
+          <linearGradient id="book-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:var(--accent);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:var(--purple);stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <g id="book-pages" transform="translate(60,60)">
+          <path d="M-30-40 L-30 40 L-8 34 L-8-34 Z" fill="url(#book-grad)" opacity="0.3">
+            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-26-38 L-26 38 L-4 32 L-4-32 Z" fill="url(#book-grad)" opacity="0.4">
+            <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" begin="0.2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-22-36 L-22 36 L0 30 L0-30 Z" fill="url(#book-grad)" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <rect x="38" y="88" width="44" height="4" rx="2" fill="var(--text-secondary)" opacity="0.3">
+          <animate attributeName="opacity" values="0.2;0.5;0.2" dur="1.5s" repeatCount="indefinite"/>
+        </rect>
+      </svg>
+    </div>
+    <p class="loading-quote" id="loading-quote"></p>
+    <p class="loading-status" id="loading-status">星尘汇聚中...</p>
+  </div>
+</div>
+
+
+  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+
+  <header id="stardust-header" class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="/" class="site-logo" aria-label="Meng">
+      <img src="/img/avatar.svg" alt="logo" width="36" height="36">
+      
+      <span class="site-title">Meng</span>
+      
+    </a>
+
+    <nav class="site-nav" role="navigation" aria-label="Main menu">
+      
+      <a href="/" class="nav-link">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+      </a>
+      
+      <a href="/archives/" class="nav-link">
+        <i class="fas fa-archive"></i>
+        <span>文章</span>
+      </a>
+      
+      <a href="/categories/" class="nav-link">
+        <i class="fas fa-folder-open"></i>
+        <span>分类</span>
+      </a>
+      
+      <a href="/tags/" class="nav-link">
+        <i class="fas fa-tags"></i>
+        <span>标签</span>
+      </a>
+      
+      <a href="/about/" class="nav-link">
+        <i class="fas fa-heart"></i>
+        <span>关于</span>
+      </a>
+      
+      <a href="/comment/" class="nav-link">
+        <i class="fas fa-comment"></i>
+        <span>留言板</span>
+      </a>
+      
+    </nav>
+
+    <div class="header-actions">
+      <button id="search-toggle" aria-label="搜索..." title="搜索...">
+        <i class="icon-search">&#x1F50D;</i>
+      </button>
+      <button id="theme-toggle" aria-label="自动切换" title="自动切换">
+        <span class="icon-sun">&#x2600;</span>
+        <span class="icon-moon">&#x1F319;</span>
+      </button>
+      <button id="sidebar-toggle" class="mobile-only" aria-label="切换侧边栏">
+        <span>&#x2630;</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+  <aside id="stardust-sidebar" class="site-sidebar" role="complementary" aria-label="Sidebar">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="sidebar-inner">
+    <button class="sidebar-toggle-btn" id="sidebar-close-btn" aria-label="Close sidebar">&times;</button>
+
+    <!-- Author Card -->
+    
+    <div class="sidebar-card author-card">
+      <img src="/img/avatar.svg"
+           alt="Meng" class="author-avatar" width="80" height="80">
+      <h3>Meng</h3>
+      <p>Meng&#39;s Blog</p>
+      <div class="author-stats">
+        <div class="author-stat">
+          <span class="stat-num">4</span>
+          <span class="stat-label">文章归档</span>
+        </div>
+        <div class="author-stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">文章分类</span>
+        </div>
+        <div class="author-stat">
+          <span class="stat-num">11</span>
+          <span class="stat-label">标签云</span>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Categories -->
+    
+    <div class="sidebar-card">
+      <h4>文章分类</h4>
+      <ul>
+        
+        <li>
+          <a href="/categories/ROS-2/">
+            ROS 2
+            <span>1</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">
+            自动化
+            <span>2</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E9%98%85%E8%AF%BB/">
+            阅读
+            <span>1</span>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+    <!-- Tags -->
+    
+    <div class="sidebar-card">
+      <h4>标签云</h4>
+      <div class="sidebar-tags">
+        
+        
+        <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"># 读书笔记</a>
+        
+        <a href="/tags/PID/"># PID</a>
+        
+        <a href="/tags/%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6/"># 反馈控制</a>
+        
+        <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/"># 工程实践</a>
+        
+        <a href="/tags/ROS-2/"># ROS 2</a>
+        
+        <a href="/tags/URDF/"># URDF</a>
+        
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/"># 机器人</a>
+        
+        <a href="/tags/%E5%85%A5%E9%97%A8/"># 入门</a>
+        
+        <a href="/tags/%E6%8E%A7%E5%88%B6/"># 控制</a>
+        
+        <a href="/tags/%E6%8E%A7%E5%88%B6%E7%90%86%E8%AE%BA/"># 控制理论</a>
+        
+        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"># 自动化</a>
+        
+      </div>
+    </div>
+    
+
+    <!-- Recent Posts -->
+    
+    <div class="sidebar-card">
+      <h4>最新发布</h4>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/08/14/kb-ROS2-URDF%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">ROS 2 URDF 入门：从 Link、Joint 到机器人模型</a>
+          <time datetime="2026-08-14">08-14</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/06/07/deep-dive-closed-loop-control/">反馈、PID 与工程实践</a>
+          <time datetime="2026-06-07">06-07</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/06/07/what-is-automation/">什么是自动化</a>
+          <time datetime="2026-06-07">06-07</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/06/07/automation-control-science-book-review/">读《自动化控制科学与技术概论》</a>
+          <time datetime="2026-06-07">06-07</time>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Archives -->
+    
+    <div class="sidebar-card">
+      <h4>文章归档</h4>
+      <ul>
+        
+        <li>
+          <a href="/archives/2026/08/">
+            2026-08
+            <span>1</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/archives/2026/06/">
+            2026-06
+            <span>3</span>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+    
+  </div>
+</aside>
+
+
+  <main class="main-content" id="content-inner">
+    <article class="post-page">
+  <!-- Cover image -->
+  
+
+  <div class="post-container">
+    <!-- Post header -->
+    <header class="post-header">
+      <h1 class="post-title">反馈、PID 与工程实践</h1>
+      <div class="post-meta">
+        
+        <time datetime="2026-06-07">
+          <i class="icon-calendar"></i> 2026-06-07
+        </time>
+        
+        
+        
+        <span class="meta-stats">
+          
+          <i class="icon-file-text"></i> 5074 字数
+          
+          
+          <i class="icon-eye"></i> ~17 分钟
+          
+        </span>
+        
+        
+        <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/" class="meta-category">
+          <i class="icon-folder"></i> 自动化
+        </a>
+        
+      </div>
+
+      
+      <div class="post-tags">
+        
+        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" class="tag-badge"># 自动化</a>
+        
+        <a href="/tags/%E6%8E%A7%E5%88%B6%E7%90%86%E8%AE%BA/" class="tag-badge"># 控制理论</a>
+        
+        <a href="/tags/PID/" class="tag-badge"># PID</a>
+        
+        <a href="/tags/%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6/" class="tag-badge"># 反馈控制</a>
+        
+        <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" class="tag-badge"># 工程实践</a>
+        
+      </div>
+      
+    </header>
+
+    <!-- Content with TOC sidebar -->
+    <div class="post-body-wrapper">
+      <div class="post-content">
+        <p>之前两篇文章分别写了自动化的基本概念和一本概论书的读后感，属于”扫盲”和”逛地图”。这篇打算往深走一步，聚焦在反馈控制最核心也最实用的东西——PID 控制，从数学原理到工程实现，把关键环节串一遍。</p>
+<span id="more"></span>
+<h2 id="从定性到定量"><a href="#从定性到定量" class="headerlink" title="从定性到定量"></a>从定性到定量</h2><p>前一篇文章讲反馈的时候，用的全是定性描述：”持续测量输出，比较偏差，自动修正”。这句话方向是对的，但真要动手设计一个控制系统，光有方向不够——<strong>偏差到底怎么修正？修正多少？修得多快？多慢？</strong> 这些问题不给定量答案，代码和参数就写不出来。</p>
+<p>反馈控制说白了就一句话：<strong>用误差来消除误差</strong>。控制器做的事情很简单——看到有误差，就往消除误差的方向输出一个控制量。但”一个控制量”太模糊了，具体是多少？这就是传递函数和 PID 要解决的问题。</p>
+<h2 id="反馈系统的数学语言"><a href="#反馈系统的数学语言" class="headerlink" title="反馈系统的数学语言"></a>反馈系统的数学语言</h2><p>要定量描述一个控制系统，首先要找到一种方法描述系统对输入信号的处理能力。控制工程选的路子是<strong>传递函数</strong>。</p>
+<p>一个线性时不变系统的传递函数 $G(s)$ 定义为输出 $Y(s)$ 与输入 $U(s)$ 的拉普拉斯变换之比：</p>
+<p>$$G(s) = \frac{Y(s)}{U(s)}$$</p>
+<p>$s$ 是复频率变量，$s = \sigma + j\omega$。拉普拉斯变换的神奇之处在于，它把微分方程变成了代数方程——时域里的卷积变成了复频域里的乘法。一个 RC 低通滤波器，时域里要解 $\dot{V}_o = (V_i - V_o)/RC$，频域里直接写：</p>
+<p>$$G(s) = \frac{1}{RCs + 1}$$</p>
+<p>对闭环系统来说，最关键的关系是反馈连接后的传递函数。前向通道是控制器 $C(s)$ 串联被控对象 $P(s)$，反馈通道是传感器 $H(s)$，整个闭环的传递函数是：</p>
+<p>$$\frac{Y(s)}{R(s)} = \frac{C(s)P(s)}{1 + C(s)P(s)H(s)}$$</p>
+<p>这个公式值得盯着多看几秒。分母里的 $1 + C(s)P(s)H(s)$ 就是反馈的灵魂——它叫<strong>回差</strong>（return difference）。放大系数越大，分母越大，闭环增益越趋近于 $1/H(s)$——也就是说，<strong>闭环系统的行为主要由反馈通道决定，而不依赖前向通道的精度</strong>。</p>
+<p>这解释了为什么反馈控制能降低对元器件的精度要求：前向通道里的放大器漂移了 20%？没关系，只要开环增益够大，闭环特性基本不受影响。这就是反馈那一篇文章里提到的”系统能力不一定取决于单个部件的质量，更取决于你的结构设计”，这里是它的数学解释。</p>
+<h2 id="PID-控制的深度解析"><a href="#PID-控制的深度解析" class="headerlink" title="PID 控制的深度解析"></a>PID 控制的深度解析</h2><p>PID 是比例-积分-微分的缩写。这三个词对应的是三种不同的误差处理方式。</p>
+<h3 id="比例控制——当下"><a href="#比例控制——当下" class="headerlink" title="比例控制——当下"></a>比例控制——当下</h3><p>比例控制是最直觉的方式：误差有多大，控制量就成正比地给多大。</p>
+<p>$$u(t) = K_p e(t)$$</p>
+<p>$e(t) = r(t) - y(t)$ 是设定值与实际输出的偏差，$K_p$ 是比例增益。</p>
+<p>比例控制的好处是<strong>快</strong>——误差刚一出现，立即就有控制作用。但它的硬伤也明显：<strong>有静差</strong>。所谓静差，就是系统稳定之后，实际输出跟目标之间始终差着一截。为什么会有静差？因为比例控制要输出一个非零的控制量 $u$，就必须有一个非零的误差 $e = u / K_p$——误差是驱动控制量的燃料，燃料烧完了，控制量也没了。</p>
+<p>从数学上看，开环增益 $K_p$ 越大，静差越小，但过大又会引发振荡。这是一个两难。</p>
+<h3 id="积分控制——过去"><a href="#积分控制——过去" class="headerlink" title="积分控制——过去"></a>积分控制——过去</h3><p>积分控制看的是误差的<strong>历史累积</strong>：</p>
+<p>$$u(t) = K_i \int_0^t e(\tau) d\tau$$</p>
+<p>只要过去存在误差，积分项就不为零，它就会持续作用，直到误差被完全消除。这就是积分项消除静差的原理——它不需要靠误差”活着”，误差即使已经趋于零，积分项的累积值还在。</p>
+<p>但积分项的代价是<strong>滞后</strong>。误差出现之后，积分项需要时间累积才能产生足够大的控制量，这会让系统的响应变慢。更麻烦的是，积分累积过大——比如执行器已经饱和了，积分还在继续累加——就会造成<strong>积分饱和</strong>（integrator windup），后面单独说。</p>
+<p>积分增益 $K_i$ 的另一个写法是 $K_i = K_p / T_i$，$T_i$ 是积分时间常数。$T_i$ 越小，积分作用越强。</p>
+<h3 id="微分控制——未来"><a href="#微分控制——未来" class="headerlink" title="微分控制——未来"></a>微分控制——未来</h3><p>微分控制看的是误差的<strong>变化趋势</strong>：</p>
+<p>$$u(t) = K_d \frac{de(t)}{dt}$$</p>
+<p>误差在快速增大？微分项提前给出一个反向的控制力来”刹车”。误差在快速趋近目标？微分项提前减小控制量，防止超调。</p>
+<p>微分项是<strong>预测性</strong>的，这很妙。它不关心当前误差多大，也不关心过去累积了多少，它只关心”照这个趋势下去，下一步会怎样？”</p>
+<p>实际上，理想的微分项在工程中几乎不可实现——它对噪声极度敏感。传感器测量噪声的导数会非常大，而且高频噪声经过微分之后会被进一步放大。所以工程上用的几乎都是<strong>实际微分</strong>（带一阶低通滤波）：</p>
+<p>$$D(s) = \frac{K_d s}{T_f s + 1}$$</p>
+<p>$T_f$ 是滤波时间常数，通常取 $T_f = K_d / N$，$N$ 在 5 到 20 之间。</p>
+<h3 id="三个参数合在一起"><a href="#三个参数合在一起" class="headerlink" title="三个参数合在一起"></a>三个参数合在一起</h3><p>完整的 PID 控制律：</p>
+<p>$$u(t) = K_p e(t) + K_i \int_0^t e(\tau) d\tau + K_d \frac{de(t)}{dt}$$</p>
+<p>在频域里：</p>
+<p>$$C(s) = K_p + \frac{K_i}{s} + K_d s$$</p>
+<p>或者用更工程化的写法：</p>
+<p>$$C(s) = K_p \left(1 + \frac{1}{T_i s} + T_d s\right)$$</p>
+<p>三个参数各管一摊，但互相牵扯。</p>
+<ul>
+<li><strong>增大 $K_p$</strong>：加快响应，减小静差，但增大超调，系统更容易振荡</li>
+<li><strong>增大 $K_i$</strong>（减小 $T_i$）：彻底消除静差，但降低稳定性，可能引起低频振荡</li>
+<li><strong>增大 $K_d$</strong>（增大 $T_d$）：增加阻尼，抑制超调，但对高频噪声敏感</li>
+</ul>
+<p>这里没有免费的午餐。</p>
+<h2 id="PID-参数整定的工程方法"><a href="#PID-参数整定的工程方法" class="headerlink" title="PID 参数整定的工程方法"></a>PID 参数整定的工程方法</h2><p>理论讲清楚了，到现场怎么把这三个数定下来？这就是整定（tuning）。</p>
+<h3 id="Ziegler-Nichols-频域法"><a href="#Ziegler-Nichols-频域法" class="headerlink" title="Ziegler-Nichols 频域法"></a>Ziegler-Nichols 频域法</h3><p>1942 年，Ziegler 和 Nichols 发表了至今仍在广泛使用的整定方法。基本流程：</p>
+<ol>
+<li>先把 $K_i$ 和 $K_d$ 设为零，只用比例控制</li>
+<li>逐步增大 $K_p$，直到系统输出出现<strong>等幅振荡</strong>（临界振荡）</li>
+<li>记下此时的临界增益 $K_u$ 和振荡周期 $T_u$</li>
+<li>按下表计算 PID 参数：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>控制类型</th>
+<th>$K_p$</th>
+<th>$T_i$</th>
+<th>$T_d$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P</td>
+<td>$0.5 K_u$</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PI</td>
+<td>$0.45 K_u$</td>
+<td>$T_u / 1.2$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PID</td>
+<td>$0.6 K_u$</td>
+<td>$T_u / 2$</td>
+<td>$T_u / 8$</td>
+</tr>
+</tbody>
+</table>
+<p>这个方法简单粗暴，非常好用，但也有前提：被控对象必须能承受临界振荡——对于一个不允许大幅波动的化工反应釜，这个方法就不太合适。</p>
+<h3 id="Ziegler-Nichols-阶跃响应法"><a href="#Ziegler-Nichols-阶跃响应法" class="headerlink" title="Ziegler-Nichols 阶跃响应法"></a>Ziegler-Nichols 阶跃响应法</h3><p>如果系统不允许临界振荡，可以用另一种方法：给系统一个开环阶跃输入，记录响应曲线。</p>
+<p>对于大多数自衡对象（self-regulating process），阶跃响应呈 S 形。记下两个关键参数：滞后时间 $L$（从输入变化到输出开始响应的时间）和时间常数 $T$（输出变化到稳态值 63.2% 所需时间）。然后：</p>
+<table>
+<thead>
+<tr>
+<th>控制类型</th>
+<th>$K_p$</th>
+<th>$T_i$</th>
+<th>$T_d$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P</td>
+<td>$T / L$</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PI</td>
+<td>$0.9 T / L$</td>
+<td>$L / 0.3$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PID</td>
+<td>$1.2 T / L$</td>
+<td>$2L$</td>
+<td>$L / 2$</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Lambda-整定法"><a href="#Lambda-整定法" class="headerlink" title="Lambda 整定法"></a>Lambda 整定法</h3><p>ZN 法的目标是”没有明显超调+合理的响应速度”，但在很多流程工业中，人们更关注鲁棒性而不是快速性。Lambda 整定法换了一个思路：<strong>你先告诉我你希望系统多快响应</strong>，然后倒推出 PID 参数。</p>
+<p>对于一阶加滞后（FOPDT）模型：</p>
+<p>$$G(s) = \frac{K}{Ts + 1} e^{-Ls}$$</p>
+<p>按 Lambda 法：</p>
+<p>$$K_p = \frac{T}{K (T_c + L)} \quad T_i = T \quad T_d = 0$$</p>
+<p>$T_c$ 就是你要设定的闭环时间常数。$T_c$ 越小，响应越快，但控制作用也越强；$T_c$ 大一些，响应平缓，对模型误差的容忍度更高。现场工程师往往偏爱 Lambda 法，因为它直观——用 $T_c$ 一个旋钮就能在”快”和”稳”之间连续调节。</p>
+<h3 id="现场调参的经验法则"><a href="#现场调参的经验法则" class="headerlink" title="现场调参的经验法则"></a>现场调参的经验法则</h3><p>公式只能给个起点，现场必须手动微调。以下是几条有用的经验：</p>
+<p><strong>先调 P，再加 I，最后加 D。</strong></p>
+<p>先把 $K_p$ 从 0 逐渐增大，直到系统有适度的振荡倾向（不是等幅振荡，是振荡后能自己收敛）。然后逐步增加 $K_i$，观察静差是否消除——$K_i$ 太大会引入低频摇摆。如果超调过大，最后加 $K_d$ 来压制。</p>
+<p><strong>判断哪个参数出了问题：</strong></p>
+<ul>
+<li>稳态误差不为零 → 加 I（或加大 $K_i$）</li>
+<li>响应太慢 → 加大 $K_p$</li>
+<li>超调太大、反复振荡 → 加 D</li>
+<li>高频抖动 → 减 D</li>
+<li>系统”嗡嗡”响（执行器频繁动作）→ 减 P 和 D，或者检查噪声</li>
+</ul>
+<p><strong>一个实用的经验：现场最常犯的错误是把 $K_p$ 调得过大。</strong> 很多人看到响应慢就猛加 P，结果系统开始振荡，又去加 D 压振荡，最后参数一团糟。正确的做法往往是反过来——先把 P 减到安全范围，再用 PI 保证稳态精度。</p>
+<h2 id="数字控制中的实现问题"><a href="#数字控制中的实现问题" class="headerlink" title="数字控制中的实现问题"></a>数字控制中的实现问题</h2><p>在实际的嵌入式系统或 PLC 中实现 PID，有几个绕不开的坑。</p>
+<h3 id="积分饱和"><a href="#积分饱和" class="headerlink" title="积分饱和"></a>积分饱和</h3><p>这是工程中最常见的 PID 问题，没有之一。</p>
+<p>当执行器达到物理极限——比如阀门已经全开了——输出没法继续增大，但积分项还在累积误差。等到误差反转（比如温度终于开始下降了），积分项已经积累了很大的值，需要很长时间才能”退回去”，这期间系统一直处于失控状态——表现为很大的超调或很长的回落时间。</p>
+<p><strong>解决办法：</strong></p>
+<p>最简单的办法是<strong>积分限幅</strong>——给积分项设一个上下限，不让它无限制地累积。</p>
+<p>稍好一点的是<strong>条件积分</strong>（conditional integration）：只有当输出不在饱和区、或者误差在某个可接受范围内时，才允许积分累加。</p>
+<p>更好的办法是<strong>反计算法</strong>（back-calculation）：当输出饱和时，把超出限幅的部分反馈回积分输入端，让积分项自动调整到不饱和的水平。</p>
+<h3 id="微分冲击"><a href="#微分冲击" class="headerlink" title="微分冲击"></a>微分冲击</h3><p>当设定值突变时，误差 $e(t)$ 会发生跳变，它的导数理论上无穷大——实际中会产生一个巨大的控制尖峰，非常危险。</p>
+<p><strong>解决办法：</strong> 只对测量值做微分（derivative on measurement），不对误差做微分。这样设定值的变化不会直接引入微分冲击：</p>
+<p>$$u_d(t) = -K_d \frac{dy(t)}{dt}$$</p>
+<h3 id="采样周期选择"><a href="#采样周期选择" class="headerlink" title="采样周期选择"></a>采样周期选择</h3><p>数字 PID 是离散执行的，采样周期 $T_s$ 的选择很重要。基本原则：</p>
+<ul>
+<li>$T_s$ 应远小于系统的主导时间常数（至少 10 倍以上）</li>
+<li>对于 ZN 整定的系统，$T_s \leq T_u / 10$ 是一个常用准则</li>
+<li>采样周期内，$K_p$、$K_i$、$K_d$ 需要从连续形式转换为离散形式</li>
+</ul>
+<p>最简单的离散化是用前向欧拉法近似积分和微分：</p>
+<p>$$u_k = K_p e_k + K_i T_s \sum_{j=0}^k e_j + K_d \frac{e_k - e_{k-1}}{T_s}$$</p>
+<p>这就是<strong>位置式 PID</strong>。实践中更常用的是<strong>增量式 PID</strong>（velocity form），它输出的是控制量的增量而不是绝对值，天然具有抗积分饱和的能力：</p>
+<p>$$\Delta u_k = K_p (e_k - e_{k-1}) + K_i T_s e_k + K_d \frac{e_k - 2e_{k-1} + e_{k-2}}{T_s}$$</p>
+<h2 id="从-PID-往前走一小步"><a href="#从-PID-往前走一小步" class="headerlink" title="从 PID 往前走一小步"></a>从 PID 往前走一小步</h2><p>PID 虽然经典，工程上经常需要更复杂的控制结构。</p>
+<p><strong>串级控制</strong>适合这种情况：被控对象有较大的滞后，或者存在一个可以提前测量的中间变量。比如加热炉的温度控制：温度响应很慢，但炉膛温度变化比物料温度快得多。外环（主环）是物料温度 PID，它的输出作为内环（副环）的设定值，内环 PID 控制炉膛温度。内环快速响应扰动，外环保证最终精度。</p>
+<p><strong>前馈-反馈复合控制</strong>适用于扰动可测但不方便通过反馈消除的场景。反馈负责”兜底”，前馈负责”提前动作”。比如锅炉汽包水位控制——蒸汽负荷变化是主要扰动，直接测量蒸汽流量，在它影响水位之前就提前调整给水量。</p>
+<p><strong>模型预测控制（MPC）</strong> 是更高阶的选择，在石油化工行业用得最多。它用一个过程模型预测未来一段时间内系统的行为，然后在线求解一个优化问题，算出最优的控制序列。MPC 天然支持多变量、带约束的控制问题，但计算量也大得多——好在今天的工业计算机已经足够强大。</p>
+<p>不过话说回来，全球仍有超过 40% 的工业控制回路在用 PID。这并不是说工程师们不懂 MPC，而是对于绝大多数单入单出回路来说，PID 加上适当的抗饱和和滤波措施，效果已经足够好。简单可靠的方案，往往就是最好的方案。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>写这篇文章的时候，我的思路也从最开始的”把 PID 的原理讲清楚”慢慢变成了”把反馈控制背后的工程思想串起来”。反馈这个概念的深度远超它表面的简单——从一个直观的”用误差消除误差”，到传递函数的复频域分析，到 PID 三个参数的物理意义，再到工程现场调参的经验智慧，每一个层面都有值得琢磨的东西。</p>
+<p>之前两篇文章分别从”自动化是什么”和”控制理论概览”两个角度切入，这篇算是沿着反馈这条线往深挖了一刀。后面可能会再写一篇关于状态空间控制或者数字滤波器在控制中的应用，燃尽了。</p>
+
+      </div>
+
+      
+    </div>
+
+    <!-- Copyright -->
+    
+<div class="copyright-card">
+  <div class="copyright-title">&#x1F4DC; 文章版权声明</div>
+  <ul>
+    <li><strong>本文作者:</strong> Meng</li>
+    <li><strong>本文链接:</strong> <a href="https://mengweikuo.icu/2026/06/07/deep-dive-closed-loop-control/">https://mengweikuo.icu/2026/06/07/deep-dive-closed-loop-control/</a></li>
+    
+    <li><strong>版权协议:</strong>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+    <!-- Tags at bottom -->
+    
+    <div class="post-bottom-tags">
+      
+      <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" class="tag-badge tag-badge--large"># 自动化</a>
+      
+      <a href="/tags/%E6%8E%A7%E5%88%B6%E7%90%86%E8%AE%BA/" class="tag-badge tag-badge--large"># 控制理论</a>
+      
+      <a href="/tags/PID/" class="tag-badge tag-badge--large"># PID</a>
+      
+      <a href="/tags/%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6/" class="tag-badge tag-badge--large"># 反馈控制</a>
+      
+      <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/" class="tag-badge tag-badge--large"># 工程实践</a>
+      
+    </div>
+    
+
+    <!-- Interaction buttons -->
+    <div class="post-actions">
+      <button class="post-action-btn" id="btn-like" aria-label="Like">
+        <i class="icon-star"></i>
+      </button>
+      <button class="post-action-btn" id="btn-collect" aria-label="Collect">
+        <i class="icon-bookmark"></i>
+      </button>
+      <button class="post-action-btn" id="btn-share-post" aria-label="Share">
+        <i class="icon-share"></i>
+      </button>
+    </div>
+
+    <!-- Previous / Next -->
+    
+<nav class="post-nav" aria-label="Post navigation">
+  
+  <a href="/2026/08/14/kb-ROS2-URDF%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/" class="post-nav-item prev">
+    <span class="post-nav-label">&#x2190; 上一篇</span>
+    <span class="post-nav-title">ROS 2 URDF 入门：从 Link、Joint 到机器人模型</span>
+  </a>
+  
+  
+  <a href="/2026/06/07/what-is-automation/" class="post-nav-item next">
+    <span class="post-nav-label">下一篇 &#x2192;</span>
+    <span class="post-nav-title">什么是自动化</span>
+  </a>
+  
+</nav>
+
+
+
+    <!-- Related posts -->
+    
+
+<section class="related-posts">
+  <h2 class="section-title">&#x1F4DA; 相关推荐</h2>
+  <div class="related-grid">
+    
+    
+
+<article class="post-card post-card--false">
+  
+  <div class="post-card-body">
+    <div class="post-meta">
+      <time datetime="2026-06-07">2026-06-07</time>
+      
+      <a href="/categories/%E9%98%85%E8%AF%BB/" class="meta-category">阅读</a>
+      
+    </div>
+    <h2 class="post-card-title">
+      <a href="/2026/06/07/automation-control-science-book-review/">读《自动化控制科学与技术概论》</a>
+    </h2>
+    
+    <p class="post-card-excerpt">花了两周啃完这本自动化概论，本以为是一本枯燥的教材，但是感觉还行。</p>
+    
+    <div class="post-card-footer">
+      <span>1717 字</span>
+      <span>6 分钟</span>
+    </div>
+  </div>
+</article>
+
+    
+    
+
+<article class="post-card post-card--false">
+  
+  <div class="post-card-body">
+    <div class="post-meta">
+      <time datetime="2026-06-07">2026-06-07</time>
+      
+      <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/" class="meta-category">自动化</a>
+      
+    </div>
+    <h2 class="post-card-title">
+      <a href="/2026/06/07/what-is-automation/">什么是自动化</a>
+    </h2>
+    
+    <p class="post-card-excerpt">不堆术语，尽量说人话。</p>
+    
+    <div class="post-card-footer">
+      <span>2204 字</span>
+      <span>8 分钟</span>
+    </div>
+  </div>
+</article>
+
+    
+  </div>
+</section>
+
+
+
+
+    <!-- Comments -->
+    
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Meng</h4>
+      <p>Meng&#39;s Blog</p>
+      
+      <div class="footer-social">
+        
+        <a href="https://github.com/Meng3330" target="_blank" rel="noopener" aria-label="github"
+           style="--hover-color:#24292e">
+          <span>G</span>
+        </a>
+        
+        <a href="mailto:i@example.com" target="_blank" rel="noopener" aria-label="email"
+           style="--hover-color:#4a7dbe">
+          <span>E</span>
+        </a>
+        
+      </div>
+      
+    </div>
+    <div class="footer-col">
+      <h4>首页</h4>
+      <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/archives/">文章</a>
+        <a href="/categories/">分类</a>
+        <a href="/tags/">标签</a>
+        <a href="/about/">关于</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>分享</h4>
+      
+        <a href="https://github.com/Meng3330" target="_blank" rel="noopener">github</a>
+      
+        <a href="mailto:i@example.com" target="_blank" rel="noopener">email</a>
+      
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>
+      
+      &copy; 2025-2026
+      Meng.
+      
+      本站由 Hexo 强力驱动 | 主题 星尘图书馆
+    </p>
+    
+    <p>
+      运行时间: <span class="footer-runtime" id="site-runtime">--</span>
+    </p>
+    
+  </div>
+</footer>
+
+
+  <div id="stardust-floats" class="float-actions" role="navigation" aria-label="Quick actions">
+  
+  <button id="btn-scroll-top" class="float-btn" aria-label="回到顶部" style="display:none">
+    <svg class="progress-ring" width="48" height="48" aria-hidden="true">
+      <circle class="progress-ring-bg" cx="24" cy="24" r="20"/>
+      <circle class="progress-ring-fill" cx="24" cy="24" r="20" id="progress-circle"/>
+    </svg>
+    <span class="icon-arrow-up">&#x2191;</span>
+  </button>
+  
+
+  
+  <button id="btn-toc-float" class="float-btn" aria-label="目录" title="目录">
+    <span>&#x2630;</span>
+  </button>
+  
+
+  
+  <button id="btn-share-float" class="float-btn" aria-label="分享" title="分享">
+    <span>&#x21AA;</span>
+  </button>
+  
+
+  
+  <button id="btn-comment-float" class="float-btn" aria-label="评论" title="评论">
+    <span>&#x1F4AC;</span>
+  </button>
+  
+</div>
+
+
+  <!-- Scripts -->
+  <script src="/js/starfield.js"></script>
+  <script src="/js/dark-mode.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/float-actions.js"></script>
+  <script src="/js/toc.js"></script>
+  <script src="/js/easter-eggs.js"></script>
+  <script src="/js/loading.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

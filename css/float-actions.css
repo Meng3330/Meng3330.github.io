@@ -1,0 +1,102 @@
+/* ============================================
+   Floating Action Buttons
+   ============================================ */
+
+.float-actions {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: var(--z-float);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.float-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--frost-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  transition: all var(--anim-fast) var(--anim-bounce);
+  position: relative;
+}
+
+.float-btn:hover {
+  transform: scale(1.1);
+  color: var(--accent);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.float-btn:active {
+  transform: scale(0.95);
+}
+
+/* Scroll to top with progress ring */
+#btn-scroll-top {
+  position: relative;
+}
+
+#btn-scroll-top .progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 48px;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 2;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 50ms linear;
+}
+
+#btn-scroll-top .icon-arrow-up {
+  position: relative;
+  z-index: 1;
+  font-size: 1.125rem;
+}
+
+/* Action menu */
+.float-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transform-origin: bottom center;
+  animation: fadeInUp var(--anim-medium) var(--anim-ease);
+}
+
+@media (max-width: 768px) {
+  .float-actions {
+    bottom: 20px;
+    right: 20px;
+    gap: 8px;
+  }
+
+  .float-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  #btn-scroll-top .progress-ring {
+    width: 42px;
+    height: 42px;
+  }
+}

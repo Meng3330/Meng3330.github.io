@@ -1,0 +1,52 @@
+/* ============================================
+   Tag Cloud Page
+   ============================================ */
+
+.tag-page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 0;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.tag-cloud a {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all var(--anim-fast) var(--anim-ease);
+}
+
+.tag-cloud a:hover {
+  background: var(--accent);
+  color: #fff !important;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+}
+
+.tag-current-title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h2);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.tag-posts {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

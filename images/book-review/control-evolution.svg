@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" font-family="Microsoft YaHei, SimHei, sans-serif">
+  <!-- Title -->
+  <text x="380" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">工业控制系统演进历程</text>
+
+  <!-- Timeline line -->
+  <line x1="60" y1="100" x2="700" y2="100" stroke="#bbb" stroke-width="3"/>
+
+  <!-- ====== Era 1: 1950s-60s ====== -->
+  <circle cx="120" cy="100" r="10" fill="#8e44ad"/>
+  <text x="120" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#8e44ad">1950s-60s</text>
+  <text x="120" y="130" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">气动 / 模拟电子</text>
+  <text x="120" y="150" text-anchor="middle" font-size="11" fill="#666">一个回路 = 一个独立控制器</text>
+  <text x="120" y="168" text-anchor="middle" font-size="11" fill="#666">操作员站在仪表墙前盯指针</text>
+
+  <!-- Small icon: gauge panel -->
+  <rect x="85" y="185" width="70" height="50" rx="6" fill="#f5f0ff" stroke="#8e44ad" stroke-width="1.2"/>
+  <circle cx="120" cy="210" r="15" fill="none" stroke="#8e44ad" stroke-width="2"/>
+  <line x1="120" y1="210" x2="128" y2="200" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="120" y="243" text-anchor="middle" font-size="10" fill="#8e44ad">模拟仪表</text>
+
+  <!-- ====== Era 2: 1970s-80s ====== -->
+  <circle cx="310" cy="100" r="10" fill="#2980b9"/>
+  <text x="310" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#2980b9">1970s-80s</text>
+  <text x="310" y="130" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">DCS 集散控制</text>
+  <text x="310" y="150" text-anchor="middle" font-size="11" fill="#666">数百回路集中到几台计算机</text>
+  <text x="310" y="168" text-anchor="middle" font-size="11" fill="#666">CRT 屏幕监控全厂状态</text>
+
+  <!-- Small icon: CRT monitor -->
+  <rect x="275" y="185" width="70" height="55" rx="6" fill="#e8f0f8" stroke="#2980b9" stroke-width="1.2"/>
+  <rect x="280" y="190" width="60" height="38" rx="3" fill="#fff" stroke="#2980b9" stroke-width="1"/>
+  <rect x="300" y="232" width="20" height="6" rx="2" fill="#2980b9"/>
+  <text x="310" y="248" text-anchor="middle" font-size="10" fill="#2980b9">CRT 操作站</text>
+
+  <!-- ====== Era 3: 1990s-2000s ====== -->
+  <circle cx="490" cy="100" r="10" fill="#e67e22"/>
+  <text x="490" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#e67e22">1990s-2000s</text>
+  <text x="490" y="130" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">现场总线 + PLC/SCADA</text>
+  <text x="490" y="150" text-anchor="middle" font-size="11" fill="#666">数字化通信替代 4-20mA</text>
+  <text x="490" y="168" text-anchor="middle" font-size="11" fill="#666">开放互联，互操作性提升</text>
+
+  <!-- Small icon: network nodes -->
+  <rect x="455" y="185" width="70" height="55" rx="6" fill="#fff8f0" stroke="#e67e22" stroke-width="1.2"/>
+  <rect x="468" y="195" width="16" height="16" rx="3" fill="#e67e22"/>
+  <rect x="500" y="195" width="16" height="16" rx="3" fill="#e67e22"/>
+  <line x1="484" y1="203" x2="500" y2="203" stroke="#e67e22" stroke-width="1.5"/>
+  <rect x="478" y="220" width="28" height="10" rx="2" fill="#e67e22" opacity="0.5"/>
+  <text x="490" y="248" text-anchor="middle" font-size="10" fill="#e67e22">现场总线网络</text>
+
+  <!-- ====== Era 4: 2010s-present ====== -->
+  <circle cx="670" cy="100" r="10" fill="#27ae60"/>
+  <text x="670" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#27ae60">2010s-今</text>
+  <text x="670" y="130" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">工业互联网 / IIoT</text>
+  <text x="670" y="150" text-anchor="middle" font-size="11" fill="#666">数据上云，AI 优化决策</text>
+  <text x="670" y="168" text-anchor="middle" font-size="11" fill="#666">数字孪生 + 预测性维护</text>
+
+  <!-- Small icon: cloud -->
+  <rect x="635" y="185" width="70" height="55" rx="6" fill="#e8f8e8" stroke="#27ae60" stroke-width="1.2"/>
+  <ellipse cx="670" cy="200" rx="16" ry="10" fill="#27ae60" opacity="0.6"/>
+  <ellipse cx="662" cy="206" rx="12" ry="8" fill="#27ae60" opacity="0.7"/>
+  <ellipse cx="678" cy="206" rx="10" ry="7" fill="#27ae60" opacity="0.8"/>
+  <text x="670" y="232" text-anchor="middle" font-size="10" fill="#27ae60">云平台</text>
+  <text x="670" y="248" text-anchor="middle" font-size="10" fill="#27ae60">AI 分析</text>
+
+  <!-- PID note at bottom -->
+  <rect x="130" y="295" width="500" height="40" rx="8" fill="#fef9e7" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="380" y="315" text-anchor="middle" font-size="13" fill="#7d6608">⚡ 技术迭代 ≠ 淘汰旧技术：即使在今天，全球仍有超过 40% 的工业控制回路使用 PID（1920s 提出）</text>
+  <text x="380" y="330" text-anchor="middle" font-size="11" fill="#b7950b">好的想法，经得起一百年的时间考验。</text>
+</svg>

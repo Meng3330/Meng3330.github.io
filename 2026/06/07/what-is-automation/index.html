@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+<title>什么是自动化 | Meng</title>
+
+<meta name="description" content="不堆术语，尽量说人话。">
+<meta name="keywords" content="自动化,入门,控制,什么是自动化">
+<meta name="author" content="Meng">
+
+<link rel="icon" href="/img/avatar.svg">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Styles -->
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- KaTeX for math rendering -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是自动化">
+<meta property="og:description" content="不堆术语，尽量说人话。">
+<meta property="og:url" content="https://mengweikuo.icu/2026/06/07/what-is-automation/">
+<meta property="og:site_name" content="Meng">
+
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="什么是自动化">
+<meta name="twitter:description" content="不堆术语，尽量说人话。">
+
+
+<link rel="alternate" href="/atom.xml" type="application/atom+xml" title="Meng">
+
+
+<!-- Anti-FOUC: set data-theme before first paint -->
+<script>
+(function() {
+  var theme = localStorage.getItem('stardust-theme');
+  if (!theme || theme === 'auto') {
+    var hour = new Date().getHours();
+    var darkStart = 19;
+    var darkEnd = 7;
+    theme = (hour >= darkStart || hour < darkEnd) ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+
+
+<body class="post-page">
+  <!-- Loading Overlay -->
+<div id="stardust-loading" class="loading-overlay" aria-hidden="true">
+  <canvas id="loading-canvas"></canvas>
+  <div class="loading-content">
+    <div class="loading-book-icon" id="loading-book">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <defs>
+          <linearGradient id="book-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:var(--accent);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:var(--purple);stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <g id="book-pages" transform="translate(60,60)">
+          <path d="M-30-40 L-30 40 L-8 34 L-8-34 Z" fill="url(#book-grad)" opacity="0.3">
+            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-26-38 L-26 38 L-4 32 L-4-32 Z" fill="url(#book-grad)" opacity="0.4">
+            <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" begin="0.2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-22-36 L-22 36 L0 30 L0-30 Z" fill="url(#book-grad)" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <rect x="38" y="88" width="44" height="4" rx="2" fill="var(--text-secondary)" opacity="0.3">
+          <animate attributeName="opacity" values="0.2;0.5;0.2" dur="1.5s" repeatCount="indefinite"/>
+        </rect>
+      </svg>
+    </div>
+    <p class="loading-quote" id="loading-quote"></p>
+    <p class="loading-status" id="loading-status">星尘汇聚中...</p>
+  </div>
+</div>
+
+
+  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+
+  <header id="stardust-header" class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="/" class="site-logo" aria-label="Meng">
+      <img src="/img/avatar.svg" alt="logo" width="36" height="36">
+      
+      <span class="site-title">Meng</span>
+      
+    </a>
+
+    <nav class="site-nav" role="navigation" aria-label="Main menu">
+      
+      <a href="/" class="nav-link">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+      </a>
+      
+      <a href="/archives/" class="nav-link">
+        <i class="fas fa-archive"></i>
+        <span>文章</span>
+      </a>
+      
+      <a href="/categories/" class="nav-link">
+        <i class="fas fa-folder-open"></i>
+        <span>分类</span>
+      </a>
+      
+      <a href="/tags/" class="nav-link">
+        <i class="fas fa-tags"></i>
+        <span>标签</span>
+      </a>
+      
+      <a href="/about/" class="nav-link">
+        <i class="fas fa-heart"></i>
+        <span>关于</span>
+      </a>
+      
+      <a href="/comment/" class="nav-link">
+        <i class="fas fa-comment"></i>
+        <span>留言板</span>
+      </a>
+      
+    </nav>
+
+    <div class="header-actions">
+      <button id="search-toggle" aria-label="搜索..." title="搜索...">
+        <i class="icon-search">&#x1F50D;</i>
+      </button>
+      <button id="theme-toggle" aria-label="自动切换" title="自动切换">
+        <span class="icon-sun">&#x2600;</span>
+        <span class="icon-moon">&#x1F319;</span>
+      </button>
+      <button id="sidebar-toggle" class="mobile-only" aria-label="切换侧边栏">
+        <span>&#x2630;</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+  <aside id="stardust-sidebar" class="site-sidebar" role="complementary" aria-label="Sidebar">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="sidebar-inner">
+    <button class="sidebar-toggle-btn" id="sidebar-close-btn" aria-label="Close sidebar">&times;</button>
+
+    <!-- Author Card -->
+    
+    <div class="sidebar-card author-card">
+      <img src="/img/avatar.svg"
+           alt="Meng" class="author-avatar" width="80" height="80">
+      <h3>Meng</h3>
+      <p>Meng&#39;s Blog</p>
+      <div class="author-stats">
+        <div class="author-stat">
+          <span class="stat-num">4</span>
+          <span class="stat-label">文章归档</span>
+        </div>
+        <div class="author-stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">文章分类</span>
+        </div>
+        <div class="author-stat">
+          <span class="stat-num">11</span>
+          <span class="stat-label">标签云</span>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Categories -->
+    
+    <div class="sidebar-card">
+      <h4>文章分类</h4>
+      <ul>
+        
+        <li>
+          <a href="/categories/ROS-2/">
+            ROS 2
+            <span>1</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">
+            自动化
+            <span>2</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E9%98%85%E8%AF%BB/">
+            阅读
+            <span>1</span>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+    <!-- Tags -->
+    
+    <div class="sidebar-card">
+      <h4>标签云</h4>
+      <div class="sidebar-tags">
+        
+        
+        <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"># 读书笔记</a>
+        
+        <a href="/tags/PID/"># PID</a>
+        
+        <a href="/tags/%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6/"># 反馈控制</a>
+        
+        <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/"># 工程实践</a>
+        
+        <a href="/tags/ROS-2/"># ROS 2</a>
+        
+        <a href="/tags/URDF/"># URDF</a>
+        
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/"># 机器人</a>
+        
+        <a href="/tags/%E5%85%A5%E9%97%A8/"># 入门</a>
+        
+        <a href="/tags/%E6%8E%A7%E5%88%B6/"># 控制</a>
+        
+        <a href="/tags/%E6%8E%A7%E5%88%B6%E7%90%86%E8%AE%BA/"># 控制理论</a>
+        
+        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"># 自动化</a>
+        
+      </div>
+    </div>
+    
+
+    <!-- Recent Posts -->
+    
+    <div class="sidebar-card">
+      <h4>最新发布</h4>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/08/14/kb-ROS2-URDF%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">ROS 2 URDF 入门：从 Link、Joint 到机器人模型</a>
+          <time datetime="2026-08-14">08-14</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/06/07/deep-dive-closed-loop-control/">反馈、PID 与工程实践</a>
+          <time datetime="2026-06-07">06-07</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/06/07/what-is-automation/">什么是自动化</a>
+          <time datetime="2026-06-07">06-07</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/06/07/automation-control-science-book-review/">读《自动化控制科学与技术概论》</a>
+          <time datetime="2026-06-07">06-07</time>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Archives -->
+    
+    <div class="sidebar-card">
+      <h4>文章归档</h4>
+      <ul>
+        
+        <li>
+          <a href="/archives/2026/08/">
+            2026-08
+            <span>1</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/archives/2026/06/">
+            2026-06
+            <span>3</span>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+    
+  </div>
+</aside>
+
+
+  <main class="main-content" id="content-inner">
+    <article class="post-page">
+  <!-- Cover image -->
+  
+
+  <div class="post-container">
+    <!-- Post header -->
+    <header class="post-header">
+      <h1 class="post-title">什么是自动化</h1>
+      <div class="post-meta">
+        
+        <time datetime="2026-06-07">
+          <i class="icon-calendar"></i> 2026-06-07
+        </time>
+        
+        
+        
+        <span class="meta-stats">
+          
+          <i class="icon-file-text"></i> 2204 字数
+          
+          
+          <i class="icon-eye"></i> ~8 分钟
+          
+        </span>
+        
+        
+        <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/" class="meta-category">
+          <i class="icon-folder"></i> 自动化
+        </a>
+        
+      </div>
+
+      
+      <div class="post-tags">
+        
+        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" class="tag-badge"># 自动化</a>
+        
+        <a href="/tags/%E5%85%A5%E9%97%A8/" class="tag-badge"># 入门</a>
+        
+        <a href="/tags/%E6%8E%A7%E5%88%B6/" class="tag-badge"># 控制</a>
+        
+      </div>
+      
+    </header>
+
+    <!-- Content with TOC sidebar -->
+    <div class="post-body-wrapper">
+      <div class="post-content">
+        <p><strong>代替</strong></p>
+<p>代替人去盯仪表、代替人去拧阀门、代替人去判断。凡是原来需要人用眼睛看、用脑子想、用手去动的环节，自动化做的事情就是把这些过程交给机器来做。</p>
+<p>但”代替”这个词其实还不够准确。因为机器不只是模仿人的动作，它常常能做得比人更好——更快、更稳、不知疲倦。人盯着一个温度表看十分钟就烦了，机器可以毫秒级地看一整天；人判断”阀门开多少”靠经验手感，机器靠一个精确的数学公式。所以自动化不止是”替代”，它很多时候是在做人类压根做不好的事情。</p>
+<h2 id="三件事：感知、决策、执行"><a href="#三件事：感知、决策、执行" class="headerlink" title="三件事：感知、决策、执行"></a>三件事：感知、决策、执行</h2><p>不管什么样的自动化系统，拆开来无非三个环节。</p>
+<p>第一是<strong>感知</strong>，就是知道”现在是什么情况”。温度多少、压力多大、液位多高、转速多快——这些都需要传感器去测量。传感器就是机器的眼睛和耳朵。常见的比如热电偶测温度、压力变送器测压力、编码器测位置和速度。传感器的精度决定了整个系统能力的上限，后面的控制算法再牛，输入的数据是垃圾，输出也好不到哪去。</p>
+<p>第二是<strong>决策</strong>，就是根据感知到的信息，计算出”接下来该怎么办”。这是自动化最核心也最吃脑子的部分。最简单的决策就是比较——实际温度比设定值高了就关小加热，低了就开大。这就是 PID 控制的本质。复杂的决策可能涉及预测未来几秒的状态、协调几十个执行器同时动作、或者在多个互相冲突的目标之间做权衡。不管是简单还是复杂，决策环节做的事本质上就是一句话：<strong>把”实际是什么”和”应该是什么”放在一起，算出一个修正动作</strong>。</p>
+<p>第三是<strong>执行</strong>，就是把决策的结果变成物理世界里的动作。控制器算出来”阀门需要开到 67%”，这个数字本身没有意义，需要执行器把它变成阀门实际的 67% 开度。常见的执行器有电动调节阀、变频器驱动电机、气缸、液压缸等等。执行器是自动化的手脚，再聪明的决策没有执行也落不了地。</p>
+<p>这三个环节串起来，就形成了一个最基本的控制回路。传感器不断报告”现在温度是 175°C”，控制器和设定值 180°C 比较，算出偏差是 5°C，根据这个偏差算出一个控制量发给加热器，加热器加大功率，温度开始上升，传感器继续报告新的温度……如此循环往复。这个循环每秒钟可能发生几十次甚至几百次，比人快了几个数量级。</p>
+<h2 id="开环和闭环，差别很大"><a href="#开环和闭环，差别很大" class="headerlink" title="开环和闭环，差别很大"></a>开环和闭环，差别很大</h2><p>理解开环和闭环的区别，基本就理解了自动化的一半。</p>
+<p>开环控制就是”我按计划执行，不管结果”。比如你设定洗衣机洗 30 分钟，它就到点停，中间不会管衣服到底洗干净了没有。这种控制方式很简单，但前提是你对过程非常了解，而且过程中不会出现意外。一旦出现你没预料到的扰动，开环就没办法了。</p>
+<p>闭环控制就是”我执行之后会看结果，不对就改”。你把空调设到 26°C，房间里的温度传感器会持续测量实际温度，如果温度偏高了就加大制冷，偏低了就减小。它不关心”我原本计划怎么运行”，它只关心”现在实际温度和目标的差距有多大”。</p>
+<p>这个差距，就是反馈信号。反馈让系统活了——它不再是一厢情愿地执行预设程序，而是在和真实世界持续对话。你说话太大声了，别人说”你小点声”，你就调低音量——日常生活中其实到处都是反馈，只是我们平时不太注意。</p>
+<p>闭环的好处很明显：鲁棒。传感器不太准？没关系，反馈会帮你修正。今天天气特别热导致房间升温快？没关系，空调会自动加大功率，因为它在持续看温度偏差。执行器老化响应变慢了？也没关系，只要还在闭环里，系统会自动调整。这就是反馈的力量。</p>
+<p>但闭环也不是万能的。它有个天生的弱点：<strong>滞后</strong>。你必须等到偏差发生了，才能去纠正。比如化工反应釜里温度已经偏离了，你才知道要去调节——这中间已经损失了一些时间和产品质量。这就是为什么有时候需要配合前馈控制：直接测量扰动，在偏差发生之前就预判性地补偿掉。</p>
+<h2 id="自动化到底在解决什么问题"><a href="#自动化到底在解决什么问题" class="headerlink" title="自动化到底在解决什么问题"></a>自动化到底在解决什么问题</h2><p>说到底，自动化在解决四个问题。</p>
+<p><strong>安全问题。</strong> 化工厂的高温高压反应，核电厂的堆芯控制，这些东西人不可能直接操作——不是不想，是做不到，反应太快、环境太危险。自动化在这里不是”锦上添花”，是”没有就没法干”。</p>
+<p><strong>精度问题。</strong> 芯片制造的光刻机需要纳米级的对准精度，药品生产的温度控制偏差可能只有零点几度。人手的精度和反应速度完全达不到这种要求，只有自动化能做到。</p>
+<p><strong>效率问题。</strong> 一个大型炼油厂可能有几千个控制回路，靠人手动操作需要几百个操作员三班倒。自动化把这些回路交给几十台控制器，操作员只需要监控异常情况。</p>
+<p><strong>一致性问题。</strong> 人操作最大的特点就是——不稳定。早上精神好，操作精准；下午犯困，开始走神；心情不好，动作粗放。自动化没有情绪波动，没有疲劳，今天和明天做出来的一模一样。</p>
+<h2 id="不是所有东西都需要自动化"><a href="#不是所有东西都需要自动化" class="headerlink" title="不是所有东西都需要自动化"></a>不是所有东西都需要自动化</h2><p>自动化很厉害，但不意味着什么东西都要自动化。</p>
+<p>有一些场景，自动化的投入产出比并不高。比如一个产量很小的试验性工艺，每次都靠有经验的老师傅手动调节反而更灵活、更便宜。老师傅能感知到的东西远比传感器多——他能听设备的声音、能闻气味、能感受振动，这种综合判断能力是机器短时间内很难具备的。</p>
+<p>还有一些场景，自动化不应该完全取代人，而应该是辅助人。比如飞机驾驶，起飞和巡航阶段高度自动化，但在特殊情况——比如发动机故障——飞行员必须能随时接管。这里有一个很重要的设计原则：自动化可以”建议”，但关键时刻人要有最终决定权。</p>
+<p>我想这也是为什么学自动化不只是学技术，还得理解什么该自动化、什么不该自动化、自动化到什么程度合适。这些问题没有标准答案，取决于具体场景的具体需求。</p>
+<hr>
+<p>写这篇文章的时候我也还在学，很多东西的理解可能还不够深。但把自己理解的东西写下来，这个过程本身就是在帮自己理清思路。</p>
+
+      </div>
+
+      
+    </div>
+
+    <!-- Copyright -->
+    
+<div class="copyright-card">
+  <div class="copyright-title">&#x1F4DC; 文章版权声明</div>
+  <ul>
+    <li><strong>本文作者:</strong> Meng</li>
+    <li><strong>本文链接:</strong> <a href="https://mengweikuo.icu/2026/06/07/what-is-automation/">https://mengweikuo.icu/2026/06/07/what-is-automation/</a></li>
+    
+    <li><strong>版权协议:</strong>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+    <!-- Tags at bottom -->
+    
+    <div class="post-bottom-tags">
+      
+      <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" class="tag-badge tag-badge--large"># 自动化</a>
+      
+      <a href="/tags/%E5%85%A5%E9%97%A8/" class="tag-badge tag-badge--large"># 入门</a>
+      
+      <a href="/tags/%E6%8E%A7%E5%88%B6/" class="tag-badge tag-badge--large"># 控制</a>
+      
+    </div>
+    
+
+    <!-- Interaction buttons -->
+    <div class="post-actions">
+      <button class="post-action-btn" id="btn-like" aria-label="Like">
+        <i class="icon-star"></i>
+      </button>
+      <button class="post-action-btn" id="btn-collect" aria-label="Collect">
+        <i class="icon-bookmark"></i>
+      </button>
+      <button class="post-action-btn" id="btn-share-post" aria-label="Share">
+        <i class="icon-share"></i>
+      </button>
+    </div>
+
+    <!-- Previous / Next -->
+    
+<nav class="post-nav" aria-label="Post navigation">
+  
+  <a href="/2026/06/07/deep-dive-closed-loop-control/" class="post-nav-item prev">
+    <span class="post-nav-label">&#x2190; 上一篇</span>
+    <span class="post-nav-title">反馈、PID 与工程实践</span>
+  </a>
+  
+  
+  <a href="/2026/06/07/automation-control-science-book-review/" class="post-nav-item next">
+    <span class="post-nav-label">下一篇 &#x2192;</span>
+    <span class="post-nav-title">读《自动化控制科学与技术概论》</span>
+  </a>
+  
+</nav>
+
+
+
+    <!-- Related posts -->
+    
+
+<section class="related-posts">
+  <h2 class="section-title">&#x1F4DA; 相关推荐</h2>
+  <div class="related-grid">
+    
+    
+
+<article class="post-card post-card--false">
+  
+  <div class="post-card-body">
+    <div class="post-meta">
+      <time datetime="2026-06-07">2026-06-07</time>
+      
+      <a href="/categories/%E9%98%85%E8%AF%BB/" class="meta-category">阅读</a>
+      
+    </div>
+    <h2 class="post-card-title">
+      <a href="/2026/06/07/automation-control-science-book-review/">读《自动化控制科学与技术概论》</a>
+    </h2>
+    
+    <p class="post-card-excerpt">花了两周啃完这本自动化概论，本以为是一本枯燥的教材，但是感觉还行。</p>
+    
+    <div class="post-card-footer">
+      <span>1717 字</span>
+      <span>6 分钟</span>
+    </div>
+  </div>
+</article>
+
+    
+    
+
+<article class="post-card post-card--false">
+  
+  <div class="post-card-body">
+    <div class="post-meta">
+      <time datetime="2026-06-07">2026-06-07</time>
+      
+      <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/" class="meta-category">自动化</a>
+      
+    </div>
+    <h2 class="post-card-title">
+      <a href="/2026/06/07/deep-dive-closed-loop-control/">反馈、PID 与工程实践</a>
+    </h2>
+    
+    <p class="post-card-excerpt">参悟反馈的本质</p>
+    
+    <div class="post-card-footer">
+      <span>5074 字</span>
+      <span>17 分钟</span>
+    </div>
+  </div>
+</article>
+
+    
+  </div>
+</section>
+
+
+
+
+    <!-- Comments -->
+    
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Meng</h4>
+      <p>Meng&#39;s Blog</p>
+      
+      <div class="footer-social">
+        
+        <a href="https://github.com/Meng3330" target="_blank" rel="noopener" aria-label="github"
+           style="--hover-color:#24292e">
+          <span>G</span>
+        </a>
+        
+        <a href="mailto:i@example.com" target="_blank" rel="noopener" aria-label="email"
+           style="--hover-color:#4a7dbe">
+          <span>E</span>
+        </a>
+        
+      </div>
+      
+    </div>
+    <div class="footer-col">
+      <h4>首页</h4>
+      <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/archives/">文章</a>
+        <a href="/categories/">分类</a>
+        <a href="/tags/">标签</a>
+        <a href="/about/">关于</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>分享</h4>
+      
+        <a href="https://github.com/Meng3330" target="_blank" rel="noopener">github</a>
+      
+        <a href="mailto:i@example.com" target="_blank" rel="noopener">email</a>
+      
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>
+      
+      &copy; 2025-2026
+      Meng.
+      
+      本站由 Hexo 强力驱动 | 主题 星尘图书馆
+    </p>
+    
+    <p>
+      运行时间: <span class="footer-runtime" id="site-runtime">--</span>
+    </p>
+    
+  </div>
+</footer>
+
+
+  <div id="stardust-floats" class="float-actions" role="navigation" aria-label="Quick actions">
+  
+  <button id="btn-scroll-top" class="float-btn" aria-label="回到顶部" style="display:none">
+    <svg class="progress-ring" width="48" height="48" aria-hidden="true">
+      <circle class="progress-ring-bg" cx="24" cy="24" r="20"/>
+      <circle class="progress-ring-fill" cx="24" cy="24" r="20" id="progress-circle"/>
+    </svg>
+    <span class="icon-arrow-up">&#x2191;</span>
+  </button>
+  
+
+  
+  <button id="btn-toc-float" class="float-btn" aria-label="目录" title="目录">
+    <span>&#x2630;</span>
+  </button>
+  
+
+  
+  <button id="btn-share-float" class="float-btn" aria-label="分享" title="分享">
+    <span>&#x21AA;</span>
+  </button>
+  
+
+  
+  <button id="btn-comment-float" class="float-btn" aria-label="评论" title="评论">
+    <span>&#x1F4AC;</span>
+  </button>
+  
+</div>
+
+
+  <!-- Scripts -->
+  <script src="/js/starfield.js"></script>
+  <script src="/js/dark-mode.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/float-actions.js"></script>
+  <script src="/js/toc.js"></script>
+  <script src="/js/easter-eggs.js"></script>
+  <script src="/js/loading.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

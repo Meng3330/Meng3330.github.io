@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 350" font-family="Microsoft YaHei, SimHei, sans-serif">
+  <defs>
+    <linearGradient id="pidGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e74c3c"/>
+      <stop offset="33%" style="stop-color:#2980b9"/>
+      <stop offset="66%" style="stop-color:#27ae60"/>
+      <stop offset="100%" style="stop-color:#8e44ad"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="375" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">PID 参数整定过程 — 反应釜温控阶跃响应</text>
+
+  <!-- Grid area -->
+  <rect x="55" y="45" width="640" height="250" fill="#fafafa" stroke="#ddd" stroke-width="1" rx="4"/>
+
+  <!-- Y-axis -->
+  <text x="42" y="52" text-anchor="end" font-size="9" fill="#888">温度</text>
+
+  <!-- Setpoint line -->
+  <line x1="55" y1="110" x2="695" y2="110" stroke="#27ae60" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="145" y="100" font-size="10" fill="#27ae60">设定值 SP（目标温度）</text>
+
+  <!-- Time axis -->
+  <text x="695" y="303" text-anchor="end" font-size="9" fill="#888">时间</text>
+
+  <!-- Step time marker -->
+  <line x1="100" y1="45" x2="100" y2="295" stroke="#999" stroke-width="0.8" stroke-dasharray="3,3"/>
+
+  <!-- Phase labels -->
+  <text x="220" y="305" text-anchor="middle" font-size="11" fill="#e74c3c" font-weight="bold">① 纯 P：振荡</text>
+  <text x="370" y="305" text-anchor="middle" font-size="11" fill="#2980b9" font-weight="bold">② P+D：压住振荡</text>
+  <text x="520" y="305" text-anchor="middle" font-size="11" fill="#27ae60" font-weight="bold">③ P+I+D：消除余差</text>
+
+  <!-- ====== Curve: Pure P (oscillates) ====== -->
+  <path d="M55,270 L100,270 L105,255 L110,220 L118,180 L125,150 L132,133 L140,125 L148,128 L155,138
+           L163,150 L170,158 L178,152 L185,142 L193,138 L200,142 L208,150 L215,155 L223,152
+           L230,146 L238,144 L245,148 L253,154 L260,157 L268,155 L275,150 L283,148
+           L290,149 L298,153 L305,155 L313,153 L320,150 L328,148 L335,150
+           L343,153 L350,156 L358,154 L365,151 L373,150 L380,151 L388,154
+           L395,156 L403,154 L410,152 L418,151 L425,152 L433,154
+           L440,156 L448,154 L455,152 L463,151 L470,153 L478,155
+           L485,156 L493,154 L500,153 L508,152 L515,153
+           L523,155 L530,156 L538,154 L545,153 L553,152
+           L560,154 L568,156 L575,154 L583,153 L590,152
+           L598,153 L605,155 L613,154 L620,153 L628,152
+           L635,153 L643,154 L650,153 L658,152 L665,153"
+        fill="none" stroke="#e74c3c" stroke-width="2.5" opacity="0.7"/>
+  <text x="280" y="195" text-anchor="middle" font-size="9" fill="#e74c3c">持续振荡，不稳定</text>
+
+  <!-- ====== Curve: P+D (damped but offset) ====== -->
+  <path d="M55,270 L100,270 L105,265 L110,250 L118,230 L125,215 L132,205 L140,198 L148,195
+           L155,194 L163,196 L170,198 L178,200 L185,202 L193,203 L200,204 L208,204
+           L215,204 L223,204 L230,204 L238,204 L245,204 L253,204 L260,204
+           L268,204 L275,204 L283,204 L290,204 L298,204 L305,204
+           L313,204 L320,204 L328,204 L335,204 L343,204 L350,204
+           L358,204 L365,204 L373,204 L380,204 L388,204 L395,204
+           L403,204 L410,204 L418,204 L425,204 L433,204 L440,204
+           L448,204 L455,204 L463,204 L470,204 L478,204 L485,204
+           L493,204 L500,204 L508,204 L515,204 L523,204 L530,204
+           L538,204 L545,204 L553,204 L560,204 L568,204 L575,204
+           L583,204 L590,204 L598,204 L605,204 L613,204 L620,204
+           L628,204 L635,204 L643,204 L650,204 L658,204 L665,204"
+        fill="none" stroke="#2980b9" stroke-width="2.5"/>
+  <text x="430" y="215" text-anchor="middle" font-size="9" fill="#2980b9">振荡压住了，但有余差</text>
+
+  <!-- ====== Curve: P+I+D (ideal) ====== -->
+  <path d="M55,270 L100,270 L105,262 L110,248 L118,225 L125,205 L132,185 L140,168 L148,155
+           L155,145 L163,138 L170,133 L178,128 L185,123 L193,118 L200,115 L208,114
+           L215,113 L223,113 L230,113 L238,113 L245,113 L253,113 L260,113
+           L268,113 L275,113 L283,113 L290,113 L298,113 L305,113
+           L313,113 L320,113 L328,113 L335,113 L343,113 L350,113
+           L358,113 L365,113 L373,113 L380,113 L388,113 L395,113
+           L403,113 L410,113 L418,113 L425,113 L433,113 L440,113
+           L448,113 L455,113 L463,113 L470,113 L478,113 L485,113
+           L493,113 L500,113 L508,113 L515,113 L523,113 L530,113
+           L538,113 L545,113 L553,113 L560,113 L568,113 L575,113
+           L583,113 L590,113 L598,113 L605,113 L613,113 L620,113
+           L628,113 L635,113 L643,113 L650,113 L658,113 L665,113"
+        fill="none" stroke="#27ae60" stroke-width="3"/>
+  <text x="560" y="135" text-anchor="middle" font-size="9" fill="#27ae60">无振荡，无余差，理想响应</text>
+
+  <!-- Arrow from offset to SP -->
+  <line x1="480" y1="200" x2="480" y2="118" stroke="#888" stroke-width="0.8" stroke-dasharray="3,3"/>
+  <text x="492" y="162" font-size="9" fill="#888">余差</text>
+
+  <!-- Annotation at bottom -->
+  <text x="375" y="340" text-anchor="middle" font-size="11" fill="#888" font-style="italic">这就是老师傅的调参口诀：先比例，后积分，最后再加微分</text>
+</svg>
