@@ -30,6 +30,7 @@ nav:
   menu:
     首页: { path: /, icon: fas fa-home }
     文章: { path: /archives/, icon: fas fa-archive }
+    知识库: { path: /knowledge/, icon: fas fa-book }
     分类: { path: /categories/, icon: fas fa-folder-open }
     标签: { path: /tags/, icon: fas fa-tags }
     关于: { path: /about/, icon: fas fa-heart }
