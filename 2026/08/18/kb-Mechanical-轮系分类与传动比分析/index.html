@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+<title>轮系分类与传动比分析 | Meng</title>
+
+<meta name="description" content="Meng&#39;s Blog">
+<meta name="keywords" content="Hexo,Butterfly,博客,技术,教程">
+<meta name="author" content="Meng">
+
+<link rel="icon" href="/img/avatar.svg">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Styles -->
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- KaTeX for math rendering -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="轮系分类与传动比分析">
+<meta property="og:description" content="Meng&#39;s Blog">
+<meta property="og:url" content="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E8%BD%AE%E7%B3%BB%E5%88%86%E7%B1%BB%E4%B8%8E%E4%BC%A0%E5%8A%A8%E6%AF%94%E5%88%86%E6%9E%90/">
+<meta property="og:site_name" content="Meng">
+
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="轮系分类与传动比分析">
+<meta name="twitter:description" content="Meng&#39;s Blog">
+
+
+<link rel="alternate" href="/atom.xml" type="application/atom+xml" title="Meng">
+
+
+<!-- Anti-FOUC: set data-theme before first paint -->
+<script>
+(function() {
+  var theme = localStorage.getItem('stardust-theme');
+  if (!theme || theme === 'auto') {
+    var hour = new Date().getHours();
+    var darkStart = 19;
+    var darkEnd = 7;
+    theme = (hour >= darkStart || hour < darkEnd) ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
+
+
+<body class="post-page">
+  <!-- Loading Overlay -->
+<div id="stardust-loading" class="loading-overlay" aria-hidden="true">
+  <canvas id="loading-canvas"></canvas>
+  <div class="loading-content">
+    <div class="loading-book-icon" id="loading-book">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <defs>
+          <linearGradient id="book-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:var(--accent);stop-opacity:1" />
+            <stop offset="100%" style="stop-color:var(--purple);stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <g id="book-pages" transform="translate(60,60)">
+          <path d="M-30-40 L-30 40 L-8 34 L-8-34 Z" fill="url(#book-grad)" opacity="0.3">
+            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-26-38 L-26 38 L-4 32 L-4-32 Z" fill="url(#book-grad)" opacity="0.4">
+            <animate attributeName="opacity" values="0.4;0.7;0.4" dur="2s" begin="0.2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M-22-36 L-22 36 L0 30 L0-30 Z" fill="url(#book-grad)" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+          </path>
+        </g>
+        <rect x="38" y="88" width="44" height="4" rx="2" fill="var(--text-secondary)" opacity="0.3">
+          <animate attributeName="opacity" values="0.2;0.5;0.2" dur="1.5s" repeatCount="indefinite"/>
+        </rect>
+      </svg>
+    </div>
+    <p class="loading-quote" id="loading-quote"></p>
+    <p class="loading-status" id="loading-status">星尘汇聚中...</p>
+  </div>
+</div>
+
+
+  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+
+  <header id="stardust-header" class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="/" class="site-logo" aria-label="Meng">
+      <img src="/img/avatar.svg" alt="logo" width="36" height="36">
+      
+      <span class="site-title">Meng</span>
+      
+    </a>
+
+    <nav class="site-nav" role="navigation" aria-label="Main menu">
+      
+      <a href="/" class="nav-link">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+      </a>
+      
+      <a href="/archives/" class="nav-link">
+        <i class="fas fa-archive"></i>
+        <span>文章</span>
+      </a>
+      
+      <a href="/knowledge/" class="nav-link">
+        <i class="fas fa-book"></i>
+        <span>知识库</span>
+      </a>
+      
+      <a href="/categories/" class="nav-link">
+        <i class="fas fa-folder-open"></i>
+        <span>分类</span>
+      </a>
+      
+      <a href="/tags/" class="nav-link">
+        <i class="fas fa-tags"></i>
+        <span>标签</span>
+      </a>
+      
+      <a href="/about/" class="nav-link">
+        <i class="fas fa-heart"></i>
+        <span>关于</span>
+      </a>
+      
+      <a href="/comment/" class="nav-link">
+        <i class="fas fa-comment"></i>
+        <span>留言板</span>
+      </a>
+      
+    </nav>
+
+    <div class="header-actions">
+      <button id="search-toggle" aria-label="搜索..." title="搜索...">
+        <i class="icon-search">&#x1F50D;</i>
+      </button>
+      <button id="theme-toggle" aria-label="自动切换" title="自动切换">
+        <span class="icon-sun">&#x2600;</span>
+        <span class="icon-moon">&#x1F319;</span>
+      </button>
+      <button id="sidebar-toggle" class="mobile-only" aria-label="切换侧边栏">
+        <span>&#x2630;</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+  <aside id="stardust-sidebar" class="site-sidebar" role="complementary" aria-label="Sidebar">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="sidebar-inner">
+    <button class="sidebar-toggle-btn" id="sidebar-close-btn" aria-label="Close sidebar">&times;</button>
+
+    <!-- Author Card -->
+    
+    <div class="sidebar-card author-card">
+      <img src="/img/avatar.svg"
+           alt="Meng" class="author-avatar" width="80" height="80">
+      <h3>Meng</h3>
+      <p>Meng&#39;s Blog</p>
+      <div class="author-stats">
+        <div class="author-stat">
+          <span class="stat-num">32</span>
+          <span class="stat-label">文章归档</span>
+        </div>
+        <div class="author-stat">
+          <span class="stat-num">9</span>
+          <span class="stat-label">文章分类</span>
+        </div>
+        <div class="author-stat">
+          <span class="stat-num">17</span>
+          <span class="stat-label">标签云</span>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Categories -->
+    
+    <div class="sidebar-card">
+      <h4>文章分类</h4>
+      <ul>
+        
+        <li>
+          <a href="/categories/C/">
+            C++
+            <span>2</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/Linux/">
+            Linux
+            <span>4</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/ROS-2/">
+            ROS 2
+            <span>4</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/Robotics/">
+            Robotics
+            <span>2</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E6%8E%A7%E5%88%B6/">
+            控制
+            <span>5</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/">
+            机械原理
+            <span>10</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E7%89%A9%E7%90%86/">
+            物理
+            <span>2</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/">
+            自动化
+            <span>2</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/categories/%E9%98%85%E8%AF%BB/">
+            阅读
+            <span>1</span>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+    <!-- Tags -->
+    
+    <div class="sidebar-card">
+      <h4>标签云</h4>
+      <div class="sidebar-tags">
+        
+        
+        <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"># 读书笔记</a>
+        
+        <a href="/tags/PID/"># PID</a>
+        
+        <a href="/tags/%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6/"># 反馈控制</a>
+        
+        <a href="/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/"># 工程实践</a>
+        
+        <a href="/tags/URDF/"># URDF</a>
+        
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/"># 机器人</a>
+        
+        <a href="/tags/%E5%85%A5%E9%97%A8/"># 入门</a>
+        
+        <a href="/tags/%E6%8E%A7%E5%88%B6%E7%90%86%E8%AE%BA/"># 控制理论</a>
+        
+        <a href="/tags/C/"># C++</a>
+        
+        <a href="/tags/%E7%89%A9%E7%90%86/"># 物理</a>
+        
+        <a href="/tags/Robotics/"># Robotics</a>
+        
+        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"># 自动化</a>
+        
+        <a href="/tags/Linux/"># Linux</a>
+        
+        <a href="/tags/ROS-2/"># ROS 2</a>
+        
+        <a href="/tags/%E6%8E%A7%E5%88%B6/"># 控制</a>
+        
+        <a href="/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"># 机械原理</a>
+        
+        <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"># 知识库</a>
+        
+      </div>
+    </div>
+    
+
+    <!-- Recent Posts -->
+    
+    <div class="sidebar-card">
+      <h4>最新发布</h4>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/08/18/kb-Control-PLC-%E4%B8%8E-HMI-%E7%9A%84%E6%8E%A5%E5%8F%A3-%E7%94%BB%E9%9D%A2%E4%B8%8E%E8%81%94%E8%B0%83/">PLC 与 HMI 的接口、画面与联调</a>
+          <time datetime="2026-08-18">08-18</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/08/18/kb-Control-PLC-%E7%A6%BB%E6%95%A3%E9%A1%BA%E5%BA%8F%E6%8E%A7%E5%88%B6%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%A3%80%E6%9F%A5/">PLC 离散顺序控制的设计与检查</a>
+          <time datetime="2026-08-18">08-18</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/08/18/kb-Control-TIA-Portal-%E4%B8%8E-PLC-%E7%9A%84%E5%AE%89%E5%85%A8%E6%8A%95%E8%BF%90%E5%92%8C%E9%80%9A%E4%BF%A1%E8%AF%8A%E6%96%AD/">TIA Portal 与 PLC 的安全投运和通信诊断</a>
+          <time datetime="2026-08-18">08-18</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/08/18/kb-Control-%E6%9C%BA%E6%A2%B0%E8%87%82%E8%BF%90%E5%8A%A8%E8%A7%84%E5%88%92-%E8%BD%A8%E8%BF%B9%E8%A7%84%E5%88%92%E4%B8%8E%E6%8E%A7%E5%88%B6/">机械臂运动规划、轨迹规划与控制</a>
+          <time datetime="2026-08-18">08-18</time>
+        </div>
+      </div>
+      
+      <div class="sidebar-post-item">
+        
+        <div class="sidebar-post-info">
+          <a href="/2026/08/18/kb-Control-%E8%BF%87%E7%A8%8B%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%B7%A5%E4%B8%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%88%86%E5%B1%82/">过程控制与工业自动化系统分层</a>
+          <time datetime="2026-08-18">08-18</time>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Archives -->
+    
+    <div class="sidebar-card">
+      <h4>文章归档</h4>
+      <ul>
+        
+        <li>
+          <a href="/archives/2026/08/">
+            2026-08
+            <span>29</span>
+          </a>
+        </li>
+        
+        <li>
+          <a href="/archives/2026/06/">
+            2026-06
+            <span>3</span>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+    
+  </div>
+</aside>
+
+
+  <main class="main-content" id="content-inner">
+    <article class="post-page">
+  <!-- Cover image -->
+  
+
+  <div class="post-container">
+    <!-- Post header -->
+    <header class="post-header">
+      <h1 class="post-title">轮系分类与传动比分析</h1>
+      <div class="post-meta">
+        
+        <time datetime="2026-08-18">
+          <i class="icon-calendar"></i> 2026-08-18
+        </time>
+        
+        
+        <span class="meta-updated">
+          <i class="icon-clock"></i> 2026-08-18
+        </span>
+        
+        
+        <span class="meta-stats">
+          
+          <i class="icon-file-text"></i> 3649 字数
+          
+          
+          <i class="icon-eye"></i> ~13 分钟
+          
+        </span>
+        
+        
+        <a href="/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/" class="meta-category">
+          <i class="icon-folder"></i> 机械原理
+        </a>
+        
+      </div>
+
+      
+      <div class="post-tags">
+        
+        <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" class="tag-badge"># 知识库</a>
+        
+        <a href="/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/" class="tag-badge"># 机械原理</a>
+        
+      </div>
+      
+    </header>
+
+    <!-- Content with TOC sidebar -->
+    <div class="post-body-wrapper">
+      <div class="post-content">
+        <!-- generated-by: kb-publish -->
+<!-- generated-by: kb-sync-public -->
+<p>轮系是由多对齿轮组成的传动系统。分析轮系时，应先依据轴线和行星架的运动判断类型，再选择传动比方法；不能仅凭齿轮数量、编号或“看起来像行星结构”分类。</p>
+<h2 id="1-先从运动约束分类"><a href="#1-先从运动约束分类" class="headerlink" title="1. 先从运动约束分类"></a>1. 先从运动约束分类</h2><h3 id="定轴轮系"><a href="#定轴轮系" class="headerlink" title="定轴轮系"></a>定轴轮系</h3><p>所有齿轮的回转轴线都相对机架固定。复合齿轮可以同轴固连，但其轴线仍不移动。分析时沿动力传递路径逐级写速度关系即可。</p>
+<h3 id="周转轮系"><a href="#周转轮系" class="headerlink" title="周转轮系"></a>周转轮系</h3><p>至少有一个齿轮的轴线随行星架（转臂）运动。安装在行星架上的齿轮既可自转，又随行星架公转；与其啮合、轴线和主轴线重合的齿轮是中心轮。</p>
+<p>判断时应先确认：</p>
+<ol>
+<li>哪个构件是机架，哪个构件是行星架；</li>
+<li>哪些齿轮轴承安装在行星架上，因而轴线会运动；</li>
+<li>图中的啮合关系是外啮合还是内啮合；</li>
+<li>哪些齿轮同轴固连，哪些只是同轴但可相对转动。</li>
+</ol>
+<p>仅凭编号、对称外形或齿轮所在的页面位置，不能可靠识别中心轮和行星轮。</p>
+<h3 id="支承不等于固定"><a href="#支承不等于固定" class="headerlink" title="支承不等于固定"></a>支承不等于固定</h3><p>图中构件的轴由机架支承，通常只表示轴线位置固定，构件仍可绕轴转动；只有题意或结构明确表明轮体与机架锁死时，才能令其角速度为零。因此，不能见到机架或轴承符号就直接写 (\omega_i=0)。应结合固连画法、轴承画法、输入箭头和题干条件共同判断；图示不清时，固定关系应标为待确认。</p>
+<h3 id="行星轮系与差动轮系"><a href="#行星轮系与差动轮系" class="headerlink" title="行星轮系与差动轮系"></a>行星轮系与差动轮系</h3><p>两者都属于周转轮系，常按机构自由度或输入约束区分：</p>
+<ul>
+<li>基本周转轮系若有一个中心构件固定，通常只需一个独立输入，常称行星轮系；</li>
+<li>若没有中心构件固定，通常需要两个独立输入才能确定其余构件运动，常称差动轮系。</li>
+</ul>
+<p>因此，“两个输入影响一个输出”是差动工作状态的表现，不是脱离自由度和约束条件后的充分分类依据。</p>
+<h2 id="2-定轴轮系的逐级传动比"><a href="#2-定轴轮系的逐级传动比" class="headerlink" title="2. 定轴轮系的逐级传动比"></a>2. 定轴轮系的逐级传动比</h2><h3 id="转速与下标约定"><a href="#转速与下标约定" class="headerlink" title="转速与下标约定"></a>转速与下标约定</h3><p>(n_i) 表示 (i) 号构件的转速，常用单位为 (\mathrm{r/min})；(\omega_i) 表示同一构件的角速度。在传动比中两者的比值相同，但全题必须保持统一的正方向和观察方向。</p>
+<p>若采用</p>
+<p>[<br>i_{ij}=\frac{n_i}{n_j}=\frac{\omega_i}{\omega_j}<br>]</p>
+<p>则下标仅表示分子和分母，不自动表示动力“从 (i) 传到 (j)”。写 (i_{ij}) 或 (i_{ji}) 都可以，但两者互为倒数，必须先写定义再代入齿数比，不应依靠“输入在前”或“输出在前”的口诀。</p>
+<p>一对外啮合圆柱齿轮满足</p>
+<p>[<br>\frac{\omega_\text{主动}}{\omega_\text{从动}}<br>=-\frac{z_\text{从动}}{z_\text{主动}}<br>]</p>
+<p>负号表示在同一观察方向和统一正方向约定下，两轮转向相反。内啮合对应同向，符号为正。</p>
+<p>同轴刚性连接的两个齿轮角速度相同。例如 (2) 和 (2’) 通常表示同一根轴上的两个不同齿轮，若两者刚性固连，则 (\omega_2=\omega_{2’})；擇号不意味“不是新零件”，也不能单独证明固连，仍应以结构图为准。对一条确定的传动链，可以写成望远镜式连乘：</p>
+<p>[<br>\omega_k=\omega_1<br>\frac{\omega_2}{\omega_1}<br>\frac{\omega_3}{\omega_2}\cdots<br>\frac{\omega_k}{\omega_{k-1}}<br>]</p>
+<p>再把每一级替换为相应的齿数比或同轴关系。中间惰轮通常不改变传动比大小，但会影响转向；复合齿轮中，参与前后两级啮合的齿轮齿数都可能保留在总传动比中。</p>
+<p>连乘能否使用的根据是中间速度量能否以一致定义代数消去，而不是必须“一个齿轮接一个齿轮”。定轴段中可把连续啮合级合并；遇到周转段时，应先用 Willis 公式得到该段的实际速度关系，再与相邻段按速度定义衔接，不能把整机直接当成定轴齿数比连乘。</p>
+<h2 id="3-蜗杆副的传动关系"><a href="#3-蜗杆副的传动关系" class="headerlink" title="3. 蜗杆副的传动关系"></a>3. 蜗杆副的传动关系</h2><p>蜗杆副常写为</p>
+<p>[<br>i_{12}=\frac{\omega_1}{\omega_2}=\frac{z_2}{z_1}<br>]</p>
+<p>其中 (z_1) 表示蜗杆头数（导程数），(z_2) 表示蜗轮齿数。部分资料把蜗杆头数另记为 (k)、(q) 或其他符号；应以题目符号定义为准，不能断言蜗杆“没有 (z_1)”。单头蜗杆时 (z_1=1)。</p>
+<p>蜗杆与蜗轮的轴通常空间交错，转向不能只靠给传动比添一个负号判断。应结合蜗杆左右旋、主动件转向、轴线布置和统一观察方向，使用右手规则或速度方向作图判断。</p>
+<h2 id="4-Willis-公式：周转轮系的统一方法"><a href="#4-Willis-公式：周转轮系的统一方法" class="headerlink" title="4. Willis 公式：周转轮系的统一方法"></a>4. Willis 公式：周转轮系的统一方法</h2><p>给整个机构叠加角速度 (-\omega_H)，相当于把行星架 (H) 假想固定。对转化后的定轴轮系，任意两个构件 (a,b) 满足</p>
+<p>[<br>\boxed{<br>\frac{\omega_a-\omega_H}{\omega_b-\omega_H}=i_{ab}^{H}<br>}<br>]</p>
+<p>其中 (i_{ab}^{H}) 是行星架固定后，从 (a) 到 (b) 按实际啮合链计算出的定轴传动比。其符号必须由外啮合、内啮合和传动路径共同确定，不能只背某个固定的正负号齿数比。</p>
+<p>推荐步骤：</p>
+<ol>
+<li>识别 (H)、中心轮、行星轮及同轴固连关系；</li>
+<li>假想固定 (H)，画出或追踪 (a\rightarrow b) 的啮合链；</li>
+<li>计算 (i_{ab}^{H})；</li>
+<li>写 Willis 公式；</li>
+<li>代入题目给定的固定、输入或输出条件求解；</li>
+<li>将结果代回原式检查方向和数量级。</li>
+</ol>
+<h3 id="“-1-i-”形式的适用条件"><a href="#“-1-i-”形式的适用条件" class="headerlink" title="“(1-i)”形式的适用条件"></a>“(1-i)”形式的适用条件</h3><p>关系</p>
+<p>[<br>\frac{\omega_a}{\omega_H}=1-i_{ab}^{H}<br>]</p>
+<p>不是无条件成立的“带转臂公式”。它来自 Willis 公式并要求构件 (b) 固定，即 (\omega_b=0)：</p>
+<p>[<br>\frac{\omega_a-\omega_H}{-\omega_H}=i_{ab}^{H}<br>\quad\Rightarrow\quad<br>\frac{\omega_a}{\omega_H}=1-i_{ab}^{H}<br>]</p>
+<p>若 (b) 不固定，就必须保留通用形式。</p>
+<h2 id="5-简单行星轮系的几何齿数关系"><a href="#5-简单行星轮系的几何齿数关系" class="headerlink" title="5. 简单行星轮系的几何齿数关系"></a>5. 简单行星轮系的几何齿数关系</h2><p>对同模数、标准齿轮、无变位的简单太阳轮—行星轮—内齿圈结构，太阳轮与齿圈同轴，行星轮同时与二者啮合。由中心距相等：</p>
+<p>[<br>\frac{m}{2}(z_s+z_p)=\frac{m}{2}(z_r-z_p)<br>]</p>
+<p>得到</p>
+<p>[<br>\boxed{z_r=z_s+2z_p}<br>]</p>
+<p>该式依赖上述结构和几何条件。复合行星轮、不同模数、变位齿轮或特殊装配不能直接套用；多行星轮均布时还需另查装配条件与邻接条件。</p>
+<h2 id="6-复合周转轮系如何拆分"><a href="#6-复合周转轮系如何拆分" class="headerlink" title="6. 复合周转轮系如何拆分"></a>6. 复合周转轮系如何拆分</h2><p>拆分必须依据真实的啮合拓扑和构件关系，而不是把编号机械分组。每个被选出的基本轮系至少要能在固定其行星架后形成一条完整的定轴啮合链。检查重点包括：</p>
+<ul>
+<li>哪些齿轮直接啮合；</li>
+<li>哪些齿轮属于同一复合行星轮并同轴固连；</li>
+<li>哪些中心构件或行星架被多个基本轮系共用；</li>
+<li>拆分后写出的相对速度方程是否覆盖了全部未知运动，并与固连约束一致。</li>
+</ul>
+<p>如果原图不清晰或缺少啮合、轴承、行星架连接信息，应先补充清晰结构图，不能凭文字编号给出唯一拆分。</p>
+<h3 id="双联行星轮的几何关系"><a href="#双联行星轮的几何关系" class="headerlink" title="双联行星轮的几何关系"></a>双联行星轮的几何关系</h3><p>若中心轮 3 与双联行星轮中的 4 外啮合，齿轮 5 与内齿圈 6 内啮合，4、5 同轴固连在行星架上，并且四轮模数相同，则同一行星轴到中心轴的距离可分别写为</p>
+<p>[<br>\frac{m(z_3+z_4)}{2}<br>=<br>\frac{m(z_6-z_5)}{2}<br>]</p>
+<p>因此</p>
+<p>[<br>\boxed{z_6=z_3+z_4+z_5}<br>]</p>
+<p>这里内啮合中心距使用齿数之差。若误把内齿圈画法识别成外啮合并使用齿数之和，会同时造成几何齿数和后续传动比错误。图示不清时，应先由齿圈位置、齿向和中心距关系确认啮合类型。</p>
+<p>固定行星架后，这条传动链包含一次外啮合和一次内啮合，故</p>
+<p>[<br>i_{36}^{H}<br>=\frac{\omega_3-\omega_H}{\omega_6-\omega_H}<br>=-\frac{z_4z_6}{z_3z_5}<br>]</p>
+<p>若齿圈 6 固定，再代入 (\omega_6=0) 求中心轮与行星架的实际速度关系。齿数乘积本身描述的是“固定行星架后的转化轮系”，不能直接当作中心轮到行星架的传动比。</p>
+<h3 id="定轴段与周转段的串联"><a href="#定轴段与周转段的串联" class="headerlink" title="定轴段与周转段的串联"></a>定轴段与周转段的串联</h3><p>复合机构可以同时包含定轴段和周转段。若定轴段输出构件 3 同时是周转段的输入，而目标输出为行星架，则可按角速度定义连乘：</p>
+<p>[<br>i_{1H}=\frac{\omega_1}{\omega_H}<br>=\frac{\omega_1}{\omega_3}\frac{\omega_3}{\omega_H}<br>=i_{13}i_{3H}<br>]</p>
+<p>这成立的原因是中间角速度代数消去，而不是因为整套机构都能使用定轴轮系的齿数连乘式。同轴固连件可用 (\omega_2=\omega_3) 替换；同轴但未固连则不能这样处理。</p>
+<h2 id="7-常见错误"><a href="#7-常见错误" class="headerlink" title="7. 常见错误"></a>7. 常见错误</h2><ul>
+<li>把“齿轮很多”当作定轴或周转轮系的判断依据。</li>
+<li>把单输入/单输出当作定轴轮系的定义。</li>
+<li>把蜗杆头数与普通圆柱齿轮齿数的符号习惯绝对化。</li>
+<li>未说明观察方向，就仅凭负号判断空间蜗杆传动的最终转向。</li>
+<li>未代入“某构件固定”的条件，就使用 (i_{aH}=1-i_{ab}^{H})。</li>
+<li>只凭齿轮编号拆分复合周转轮系，未核对实际啮合链和固连关系。</li>
+<li>把固定行星架时得到的 (i_{ab}^{H}) 当作构件到行星架的实际传动比。</li>
+<li>未先确认内、外啮合，就写中心距的齿数和或齿数差。</li>
+<li>把机架支承符号直接解读为齿轮被锁死，或在缺少清晰原图时断定某构件转速为零。</li>
+<li>把 (i_{ij}) 的下标理解成固定的动力传递方向，而没有先核对分子、分母的定义。</li>
+</ul>
+
+      </div>
+
+      
+    </div>
+
+    <!-- Copyright -->
+    
+<div class="copyright-card">
+  <div class="copyright-title">&#x1F4DC; 文章版权声明</div>
+  <ul>
+    <li><strong>本文作者:</strong> Meng</li>
+    <li><strong>本文链接:</strong> <a href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E8%BD%AE%E7%B3%BB%E5%88%86%E7%B1%BB%E4%B8%8E%E4%BC%A0%E5%8A%A8%E6%AF%94%E5%88%86%E6%9E%90/">https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E8%BD%AE%E7%B3%BB%E5%88%86%E7%B1%BB%E4%B8%8E%E4%BC%A0%E5%8A%A8%E6%AF%94%E5%88%86%E6%9E%90/</a></li>
+    
+    <li><strong>版权协议:</strong>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+    <!-- Tags at bottom -->
+    
+    <div class="post-bottom-tags">
+      
+      <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" class="tag-badge tag-badge--large"># 知识库</a>
+      
+      <a href="/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/" class="tag-badge tag-badge--large"># 机械原理</a>
+      
+    </div>
+    
+
+    <!-- Interaction buttons -->
+    <div class="post-actions">
+      <button class="post-action-btn" id="btn-like" aria-label="Like">
+        <i class="icon-star"></i>
+      </button>
+      <button class="post-action-btn" id="btn-collect" aria-label="Collect">
+        <i class="icon-bookmark"></i>
+      </button>
+      <button class="post-action-btn" id="btn-share-post" aria-label="Share">
+        <i class="icon-share"></i>
+      </button>
+    </div>
+
+    <!-- Previous / Next -->
+    
+<nav class="post-nav" aria-label="Post navigation">
+  
+  <a href="/2026/08/18/kb-Mechanical-%E6%B8%90%E5%BC%80%E7%BA%BF%E7%9B%B4%E9%BD%BF%E8%BD%AE%E7%9A%84%E9%9D%9E%E6%A0%87%E5%87%86%E5%AE%89%E8%A3%85%E4%B8%8E%E9%87%8D%E5%90%88%E5%BA%A6/" class="post-nav-item prev">
+    <span class="post-nav-label">&#x2190; 上一篇</span>
+    <span class="post-nav-title">渐开线直齿轮的非标准安装与重合度</span>
+  </a>
+  
+  
+  <a href="/2026/08/18/kb-Mechanical-%E9%92%B3%E5%B7%A5%E5%9F%BA%E7%A1%80%E5%B7%A5%E8%89%BA%E4%B8%8E%E5%AD%94%E8%9E%BA%E7%BA%B9%E5%8A%A0%E5%B7%A5/" class="post-nav-item next">
+    <span class="post-nav-label">下一篇 &#x2192;</span>
+    <span class="post-nav-title">钳工基础工艺与孔螺纹加工</span>
+  </a>
+  
+</nav>
+
+
+
+    <!-- Related posts -->
+    
+
+<section class="related-posts">
+  <h2 class="section-title">&#x1F4DA; 相关推荐</h2>
+  <div class="related-grid">
+    
+    
+
+<article class="post-card post-card--false">
+  
+  <div class="post-card-body">
+    <div class="post-meta">
+      <time datetime="2026-08-18">2026-08-18</time>
+      
+      <a href="/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/" class="meta-category">机械原理</a>
+      
+    </div>
+    <h2 class="post-card-title">
+      <a href="/2026/08/18/kb-Mechanical-%E5%B0%BA%E5%AF%B8%E5%85%AC%E5%B7%AE-%E9%85%8D%E5%90%88%E4%B8%8E%E5%85%AC%E5%B7%AE%E5%B8%A6%E8%AE%A1%E7%AE%97/">尺寸公差、配合与公差带计算</a>
+    </h2>
+    
+    <p class="post-card-excerpt">尺寸公差用一个允许区间表达“零件不必完全相同，但仍能满足功能”。互换性的重点不是把公差压到最小，而是在满足装配、运动、强度和寿命的前提下，为制造保留合理的变动范围。
+互换性的层次
+完全互换：零部件不经选择、修配或调整即可装配并满足规定功能，适合标准件和批量生产。
+不完全互换：通过分组选择、调整或...</p>
+    
+    <div class="post-card-footer">
+      <span>1983 字</span>
+      <span>7 分钟</span>
+    </div>
+  </div>
+</article>
+
+    
+    
+
+<article class="post-card post-card--false">
+  
+  <div class="post-card-body">
+    <div class="post-meta">
+      <time datetime="2026-08-18">2026-08-18</time>
+      
+      <a href="/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/" class="meta-category">机械原理</a>
+      
+    </div>
+    <h2 class="post-card-title">
+      <a href="/2026/08/18/kb-Mechanical-%E5%87%A0%E4%BD%95%E5%85%AC%E5%B7%AE-%E5%AE%9E%E4%BD%93%E8%A6%81%E6%B1%82%E4%B8%8E%E5%85%89%E6%BB%91%E6%9E%81%E9%99%90%E9%87%8F%E8%A7%84/">几何公差、实体要求与光滑极限量规</a>
+    </h2>
+    
+    <p class="post-card-excerpt">尺寸合格不等于一定可装配。圆度、直线度、同轴度等几何误差会改变实际接触和装配边界。几何公差、实体要求与光滑极限量规共同解决“局部尺寸合格时，整体形状仍可能影响装配”的问题。
+几何公差的对象与基准
+形状公差控制被测要素自身，典型项目有直线度、平面度、圆度、圆柱度，通常不依赖基准。
+方向公差控制相对...</p>
+    
+    <div class="post-card-footer">
+      <span>2129 字</span>
+      <span>8 分钟</span>
+    </div>
+  </div>
+</article>
+
+    
+    
+
+<article class="post-card post-card--false">
+  
+  <div class="post-card-body">
+    <div class="post-meta">
+      <time datetime="2026-08-18">2026-08-18</time>
+      
+      <a href="/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/" class="meta-category">机械原理</a>
+      
+    </div>
+    <h2 class="post-card-title">
+      <a href="/2026/08/18/kb-Mechanical-%E5%B9%B3%E9%9D%A2%E5%9B%9B%E6%9D%86%E6%9C%BA%E6%9E%84%E7%9A%84%E6%80%A5%E5%9B%9E%E7%89%B9%E6%80%A7%E4%B8%8E%E9%A2%98%E5%9E%8B%E8%AF%86%E5%88%AB/">平面四杆机构的急回特性与题型识别</a>
+    </h2>
+    
+    <p class="post-card-excerpt">概念定位急回特性描述从动件往复运动时，工作行程与返回行程的平均速度不同。它常见于刨床、插床等需要“工作行程较慢、空回行程较快”的机构。
+在机械原理习题中，若题目同时出现以下信息，通常应从“平面连杆机构的运动特性与综合设计”方向分析：
+
+行程速比系数 (K)；
+极位夹角 (\theta)；
+曲柄摇...</p>
+    
+    <div class="post-card-footer">
+      <span>1907 字</span>
+      <span>7 分钟</span>
+    </div>
+  </div>
+</article>
+
+    
+  </div>
+</section>
+
+
+
+
+    <!-- Comments -->
+    
+
+  </div>
+</article>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Meng</h4>
+      <p>Meng&#39;s Blog</p>
+      
+      <div class="footer-social">
+        
+        <a href="https://github.com/Meng3330" target="_blank" rel="noopener" aria-label="github"
+           style="--hover-color:#24292e">
+          <span>G</span>
+        </a>
+        
+        <a href="mailto:i@example.com" target="_blank" rel="noopener" aria-label="email"
+           style="--hover-color:#4a7dbe">
+          <span>E</span>
+        </a>
+        
+      </div>
+      
+    </div>
+    <div class="footer-col">
+      <h4>首页</h4>
+      <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/archives/">文章</a>
+        <a href="/categories/">分类</a>
+        <a href="/tags/">标签</a>
+        <a href="/about/">关于</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>分享</h4>
+      
+        <a href="https://github.com/Meng3330" target="_blank" rel="noopener">github</a>
+      
+        <a href="mailto:i@example.com" target="_blank" rel="noopener">email</a>
+      
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>
+      
+      &copy; 2025-2026
+      Meng.
+      
+      本站由 Hexo 强力驱动 | 主题 星尘图书馆
+    </p>
+    
+    <p>
+      运行时间: <span class="footer-runtime" id="site-runtime">--</span>
+    </p>
+    
+  </div>
+</footer>
+
+
+  <div id="stardust-floats" class="float-actions" role="navigation" aria-label="Quick actions">
+  
+  <button id="btn-scroll-top" class="float-btn" aria-label="回到顶部" style="display:none">
+    <svg class="progress-ring" width="48" height="48" aria-hidden="true">
+      <circle class="progress-ring-bg" cx="24" cy="24" r="20"/>
+      <circle class="progress-ring-fill" cx="24" cy="24" r="20" id="progress-circle"/>
+    </svg>
+    <span class="icon-arrow-up">&#x2191;</span>
+  </button>
+  
+
+  
+  <button id="btn-toc-float" class="float-btn" aria-label="目录" title="目录">
+    <span>&#x2630;</span>
+  </button>
+  
+
+  
+  <button id="btn-share-float" class="float-btn" aria-label="分享" title="分享">
+    <span>&#x21AA;</span>
+  </button>
+  
+
+  
+  <button id="btn-comment-float" class="float-btn" aria-label="评论" title="评论">
+    <span>&#x1F4AC;</span>
+  </button>
+  
+</div>
+
+
+  <!-- Scripts -->
+  <script src="/js/starfield.js"></script>
+  <script src="/js/dark-mode.js"></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/sidebar.js"></script>
+  <script src="/js/float-actions.js"></script>
+  <script src="/js/toc.js"></script>
+  <script src="/js/easter-eggs.js"></script>
+  <script src="/js/loading.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

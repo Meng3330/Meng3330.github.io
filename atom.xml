@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://mengweikuo.icu/"/>
-  <updated>2026-08-14T12:07:28.645Z</updated>
+  <updated>2026-08-18T13:10:58.486Z</updated>
   <id>https://mengweikuo.icu/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ROS 2 URDF 入门：从 Link、Joint 到机器人模型</title>
-    <link href="https://mengweikuo.icu/2026/08/14/kb-ROS2-URDF%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/"/>
-    <id>https://mengweikuo.icu/2026/08/14/kb-ROS2-URDF机器人模型基础/</id>
-    <published>2026-08-13T16:00:00.000Z</published>
-    <updated>2026-08-14T12:07:28.645Z</updated>
+    <title>PLC 与 HMI 的接口、画面与联调</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Control-PLC-%E4%B8%8E-HMI-%E7%9A%84%E6%8E%A5%E5%8F%A3-%E7%94%BB%E9%9D%A2%E4%B8%8E%E8%81%94%E8%B0%83/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Control-PLC-与-HMI-的接口-画面与联调/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.486Z</updated>
     
     <summary type="html">
     
@@ -30,96 +30,579 @@
         
         
           &lt;!-- generated-by: kb-publish --&gt;
-&lt;p&gt;当我们希望在 ROS 2
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;p&gt;HMI 是控制系统的操作与观测界面，不应成为另一份隐藏的控制程序。稳定的工程将网络、通信连接、变量契约、PLC
         
       
     
     </summary>
     
-      <category term="ROS 2" scheme="https://mengweikuo.icu/categories/ROS-2/"/>
+      <category term="控制" scheme="https://mengweikuo.icu/categories/%E6%8E%A7%E5%88%B6/"/>
     
     
-      <category term="ROS 2" scheme="https://mengweikuo.icu/tags/ROS-2/"/>
-    
-      <category term="URDF" scheme="https://mengweikuo.icu/tags/URDF/"/>
-    
-      <category term="机器人" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>反馈、PID 与工程实践</title>
-    <link href="https://mengweikuo.icu/2026/06/07/deep-dive-closed-loop-control/"/>
-    <id>https://mengweikuo.icu/2026/06/07/deep-dive-closed-loop-control/</id>
-    <published>2026-06-07T10:00:00.000Z</published>
-    <updated>2026-06-07T10:00:00.000Z</updated>
-    
-    <summary type="html">
-    
-      参悟反馈的本质
-    
-    </summary>
-    
-      <category term="自动化" scheme="https://mengweikuo.icu/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
-    
-      <category term="自动化" scheme="https://mengweikuo.icu/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
-      <category term="控制理论" scheme="https://mengweikuo.icu/tags/%E6%8E%A7%E5%88%B6%E7%90%86%E8%AE%BA/"/>
-    
-      <category term="PID" scheme="https://mengweikuo.icu/tags/PID/"/>
-    
-      <category term="反馈控制" scheme="https://mengweikuo.icu/tags/%E5%8F%8D%E9%A6%88%E6%8E%A7%E5%88%B6/"/>
-    
-      <category term="工程实践" scheme="https://mengweikuo.icu/tags/%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>什么是自动化</title>
-    <link href="https://mengweikuo.icu/2026/06/07/what-is-automation/"/>
-    <id>https://mengweikuo.icu/2026/06/07/what-is-automation/</id>
-    <published>2026-06-07T07:37:28.000Z</published>
-    <updated>2026-06-07T07:37:28.000Z</updated>
-    
-    <summary type="html">
-    
-      不堆术语，尽量说人话。
-    
-    </summary>
-    
-      <category term="自动化" scheme="https://mengweikuo.icu/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
-    
-      <category term="自动化" scheme="https://mengweikuo.icu/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
-      <category term="入门" scheme="https://mengweikuo.icu/tags/%E5%85%A5%E9%97%A8/"/>
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     
       <category term="控制" scheme="https://mengweikuo.icu/tags/%E6%8E%A7%E5%88%B6/"/>
     
   </entry>
   
   <entry>
-    <title>读《自动化控制科学与技术概论》</title>
-    <link href="https://mengweikuo.icu/2026/06/07/automation-control-science-book-review/"/>
-    <id>https://mengweikuo.icu/2026/06/07/automation-control-science-book-review/</id>
-    <published>2026-06-07T02:05:03.000Z</published>
-    <updated>2026-06-07T02:05:03.000Z</updated>
+    <title>PLC 离散顺序控制的设计与检查</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Control-PLC-%E7%A6%BB%E6%95%A3%E9%A1%BA%E5%BA%8F%E6%8E%A7%E5%88%B6%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%A3%80%E6%9F%A5/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Control-PLC-离散顺序控制的设计与检查/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.486Z</updated>
     
     <summary type="html">
     
-      花了两周啃完这本自动化概论，本以为是一本枯燥的教材，但是感觉还行。
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;p&gt;PLC
+        
+      
     
     </summary>
     
-      <category term="阅读" scheme="https://mengweikuo.icu/categories/%E9%98%85%E8%AF%BB/"/>
+      <category term="控制" scheme="https://mengweikuo.icu/categories/%E6%8E%A7%E5%88%B6/"/>
     
     
-      <category term="自动化" scheme="https://mengweikuo.icu/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
     
-      <category term="控制理论" scheme="https://mengweikuo.icu/tags/%E6%8E%A7%E5%88%B6%E7%90%86%E8%AE%BA/"/>
+      <category term="控制" scheme="https://mengweikuo.icu/tags/%E6%8E%A7%E5%88%B6/"/>
     
-      <category term="读书笔记" scheme="https://mengweikuo.icu/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+  </entry>
+  
+  <entry>
+    <title>TIA Portal 与 PLC 的安全投运和通信诊断</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Control-TIA-Portal-%E4%B8%8E-PLC-%E7%9A%84%E5%AE%89%E5%85%A8%E6%8A%95%E8%BF%90%E5%92%8C%E9%80%9A%E4%BF%A1%E8%AF%8A%E6%96%AD/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Control-TIA-Portal-与-PLC-的安全投运和通信诊断/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.486Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;p&gt;真实 PLC
+        
+      
+    
+    </summary>
+    
+      <category term="控制" scheme="https://mengweikuo.icu/categories/%E6%8E%A7%E5%88%B6/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="控制" scheme="https://mengweikuo.icu/tags/%E6%8E%A7%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>机械臂运动规划、轨迹规划与控制</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Control-%E6%9C%BA%E6%A2%B0%E8%87%82%E8%BF%90%E5%8A%A8%E8%A7%84%E5%88%92-%E8%BD%A8%E8%BF%B9%E8%A7%84%E5%88%92%E4%B8%8E%E6%8E%A7%E5%88%B6/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Control-机械臂运动规划-轨迹规划与控制/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.486Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="控制" scheme="https://mengweikuo.icu/categories/%E6%8E%A7%E5%88%B6/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="控制" scheme="https://mengweikuo.icu/tags/%E6%8E%A7%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>过程控制与工业自动化系统分层</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Control-%E8%BF%87%E7%A8%8B%E6%8E%A7%E5%88%B6%E4%B8%8E%E5%B7%A5%E4%B8%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%88%86%E5%B1%82/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Control-过程控制与工业自动化系统分层/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="控制" scheme="https://mengweikuo.icu/categories/%E6%8E%A7%E5%88%B6/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="控制" scheme="https://mengweikuo.icu/tags/%E6%8E%A7%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++ 多条件命中与分隔输出</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Cpp-C-%E5%A4%9A%E6%9D%A1%E4%BB%B6%E5%91%BD%E4%B8%AD%E4%B8%8E%E5%88%86%E9%9A%94%E8%BE%93%E5%87%BA/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Cpp-C-多条件命中与分隔输出/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="C++" scheme="https://mengweikuo.icu/categories/C/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="C++" scheme="https://mengweikuo.icu/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>编程范式与命名约定</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Cpp-%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F%E4%B8%8E%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Cpp-编程范式与命名约定/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;h2 id=&quot;C-和-Python-都是多范式语言&quot;&gt;&lt;a href=&quot;#C-和-Python-都是多范式语言&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="C++" scheme="https://mengweikuo.icu/categories/C/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="C++" scheme="https://mengweikuo.icu/tags/C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git 克隆与源码快照</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Linux-Git-%E5%85%8B%E9%9A%86%E4%B8%8E%E6%BA%90%E7%A0%81%E5%BF%AB%E7%85%A7/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Linux-Git-克隆与源码快照/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;p&gt;从代码托管平台获取项目时，&lt;code&gt;Download ZIP&lt;/code&gt; 与 &lt;code&gt;git clone&lt;/code&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://mengweikuo.icu/categories/Linux/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="Linux" scheme="https://mengweikuo.icu/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GitHub Releases 多平台资产的选择与校验</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Linux-GitHub-Releases-%E5%A4%9A%E5%B9%B3%E5%8F%B0%E8%B5%84%E4%BA%A7%E7%9A%84%E9%80%89%E6%8B%A9%E4%B8%8E%E6%A0%A1%E9%AA%8C/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Linux-GitHub-Releases-多平台资产的选择与校验/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;p&gt;GitHub Releases 常同时提供多个操作系统、CPU
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://mengweikuo.icu/categories/Linux/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="Linux" scheme="https://mengweikuo.icu/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 桌面输入法框架的切换与清理</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Linux-Linux-%E6%A1%8C%E9%9D%A2%E8%BE%93%E5%85%A5%E6%B3%95%E6%A1%86%E6%9E%B6%E7%9A%84%E5%88%87%E6%8D%A2%E4%B8%8E%E6%B8%85%E7%90%86/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Linux-Linux-桌面输入法框架的切换与清理/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;p&gt;Linux
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://mengweikuo.icu/categories/Linux/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="Linux" scheme="https://mengweikuo.icu/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 终端中的文件查看、编辑与打开</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Linux-Linux-%E7%BB%88%E7%AB%AF%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%9F%A5%E7%9C%8B-%E7%BC%96%E8%BE%91%E4%B8%8E%E6%89%93%E5%BC%80/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Linux-Linux-终端中的文件查看-编辑与打开/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;p&gt;在终端中“打开文件”可能指查看内容、编辑内容，或把文件交给图形界面程序。应先区分目的，再选择命令。&lt;/p&gt;
+&lt;h2
+        
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://mengweikuo.icu/categories/Linux/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="Linux" scheme="https://mengweikuo.icu/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>尺寸公差、配合与公差带计算</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E5%B0%BA%E5%AF%B8%E5%85%AC%E5%B7%AE-%E9%85%8D%E5%90%88%E4%B8%8E%E5%85%AC%E5%B7%AE%E5%B8%A6%E8%AE%A1%E7%AE%97/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-尺寸公差-配合与公差带计算/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>几何公差、实体要求与光滑极限量规</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E5%87%A0%E4%BD%95%E5%85%AC%E5%B7%AE-%E5%AE%9E%E4%BD%93%E8%A6%81%E6%B1%82%E4%B8%8E%E5%85%89%E6%BB%91%E6%9E%81%E9%99%90%E9%87%8F%E8%A7%84/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-几何公差-实体要求与光滑极限量规/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>平面四杆机构的急回特性与题型识别</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E5%B9%B3%E9%9D%A2%E5%9B%9B%E6%9D%86%E6%9C%BA%E6%9E%84%E7%9A%84%E6%80%A5%E5%9B%9E%E7%89%B9%E6%80%A7%E4%B8%8E%E9%A2%98%E5%9E%8B%E8%AF%86%E5%88%AB/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-平面四杆机构的急回特性与题型识别/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public --&gt;
+&lt;h2 id=&quot;概念定位&quot;&gt;&lt;a href=&quot;#概念定位&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>技术测量误差与表面纹理评定</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E6%8A%80%E6%9C%AF%E6%B5%8B%E9%87%8F%E8%AF%AF%E5%B7%AE%E4%B8%8E%E8%A1%A8%E9%9D%A2%E7%BA%B9%E7%90%86%E8%AF%84%E5%AE%9A/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-技术测量误差与表面纹理评定/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.488Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>平面机构自由度的计算与检查</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E5%B9%B3%E9%9D%A2%E6%9C%BA%E6%9E%84%E8%87%AA%E7%94%B1%E5%BA%A6%E7%9A%84%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%A3%80%E6%9F%A5/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-平面机构自由度的计算与检查/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.488Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>有限元位移云图的判读与显示检查</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E6%9C%89%E9%99%90%E5%85%83%E4%BD%8D%E7%A7%BB%E4%BA%91%E5%9B%BE%E7%9A%84%E5%88%A4%E8%AF%BB%E4%B8%8E%E6%98%BE%E7%A4%BA%E6%A3%80%E6%9F%A5/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-有限元位移云图的判读与显示检查/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.488Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>标准件、连接件与齿轮精度的公差识读</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E6%A0%87%E5%87%86%E4%BB%B6-%E8%BF%9E%E6%8E%A5%E4%BB%B6%E4%B8%8E%E9%BD%BF%E8%BD%AE%E7%B2%BE%E5%BA%A6%E7%9A%84%E5%85%AC%E5%B7%AE%E8%AF%86%E8%AF%BB/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-标准件-连接件与齿轮精度的公差识读/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.488Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>渐开线直齿轮的非标准安装与重合度</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E6%B8%90%E5%BC%80%E7%BA%BF%E7%9B%B4%E9%BD%BF%E8%BD%AE%E7%9A%84%E9%9D%9E%E6%A0%87%E5%87%86%E5%AE%89%E8%A3%85%E4%B8%8E%E9%87%8D%E5%90%88%E5%BA%A6/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-渐开线直齿轮的非标准安装与重合度/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.488Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>轮系分类与传动比分析</title>
+    <link href="https://mengweikuo.icu/2026/08/18/kb-Mechanical-%E8%BD%AE%E7%B3%BB%E5%88%86%E7%B1%BB%E4%B8%8E%E4%BC%A0%E5%8A%A8%E6%AF%94%E5%88%86%E6%9E%90/"/>
+    <id>https://mengweikuo.icu/2026/08/18/kb-Mechanical-轮系分类与传动比分析/</id>
+    <published>2026-08-17T16:00:00.000Z</published>
+    <updated>2026-08-18T13:10:58.488Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;!-- generated-by: kb-publish --&gt;
+&lt;!-- generated-by: kb-sync-public
+        
+      
+    
+    </summary>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/categories/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
+    
+    
+      <category term="知识库" scheme="https://mengweikuo.icu/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/"/>
+    
+      <category term="机械原理" scheme="https://mengweikuo.icu/tags/%E6%9C%BA%E6%A2%B0%E5%8E%9F%E7%90%86/"/>
     
   </entry>
   
