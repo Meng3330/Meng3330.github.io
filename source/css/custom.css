@@ -700,3 +700,177 @@ hr {
     opacity: 0;
   }
 }
+
+
+/* =========================================================
+   2026-08-18 Layout Refinement
+   ========================================================= */
+
+/* ---------- 1. 首页 Hero：减少无效纵向留白 ---------- */
+
+.hero-section {
+  min-height: 62vh !important;
+  padding-top: 90px !important;
+  padding-bottom: 45px !important;
+}
+
+.hero-content {
+  transform: translateY(-10px);
+}
+
+.hero-title {
+  margin-bottom: 10px !important;
+}
+
+.hero-subtitle {
+  margin-bottom: 24px !important;
+}
+
+.hero-cta {
+  margin-top: 4px !important;
+}
+
+
+/* ---------- 2. 首页主体整体更紧凑 ---------- */
+
+.home-content {
+  max-width: 1120px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.home-content > section {
+  margin-bottom: 46px !important;
+}
+
+
+/* ---------- 3. 首页分类：桌面端固定 3 列 ---------- */
+
+.category-cards .category-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+.category-card {
+  min-height: 132px !important;
+}
+
+.category-card-inner {
+  padding: 22px 18px !important;
+}
+
+.category-name {
+  margin-top: 10px !important;
+}
+
+.category-count {
+  margin-top: 7px !important;
+}
+
+
+/* ---------- 4. 普通独立页面/知识库增加有效阅读宽度 ---------- */
+
+.page-page .page-body {
+  max-width: 1120px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.page-page .page-content {
+  max-width: 100% !important;
+  line-height: 1.78;
+}
+
+
+/* ---------- 5. 知识库页面 ---------- */
+
+body:has(.page-title) .page-content blockquote {
+  margin-top: 8px;
+  margin-bottom: 22px;
+  padding: 16px 18px;
+  border-radius: 8px;
+}
+
+/* 知识库标题层级 */
+.page-content h2 {
+  margin-top: 34px;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(127, 127, 127, 0.18);
+}
+
+/* 知识节点列表不要挤在一起 */
+.page-content ul {
+  line-height: 1.9;
+}
+
+.page-content li {
+  margin: 4px 0;
+}
+
+/* 快速导航区域链接更像导航，而不是普通正文 */
+.page-content h2:first-of-type + ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-left: 0;
+  margin: 18px 0 26px;
+}
+
+.page-content h2:first-of-type + ul li {
+  list-style: none;
+  margin: 0;
+}
+
+.page-content h2:first-of-type + ul li a {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid rgba(80, 140, 255, 0.30);
+  border-radius: 999px;
+  text-decoration: none;
+  background: rgba(60, 110, 220, 0.07);
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+
+.page-content h2:first-of-type + ul li a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(80, 140, 255, 0.65);
+  background: rgba(60, 110, 220, 0.13);
+}
+
+
+/* ---------- 6. 平板与手机 ---------- */
+
+@media (max-width: 900px) {
+  .hero-section {
+    min-height: 58vh !important;
+  }
+
+  .category-cards .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-section {
+    min-height: 54vh !important;
+    padding-top: 76px !important;
+    padding-bottom: 30px !important;
+  }
+
+  .category-cards .category-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .page-content h2:first-of-type + ul {
+    gap: 8px;
+  }
+
+  .page-content h2:first-of-type + ul li a {
+    padding: 7px 11px;
+  }
+}

@@ -67,7 +67,7 @@ float_actions:
 # Home Page
 home:
   hero_title: "Meng"
-  hero_subtitle: "控制工程学习笔记"
+  hero_subtitle: "控制 · 机器人 · ROS 2 · 工程实践"
   featured_count: 3
   latest_count: 10
   category_cards: 6
